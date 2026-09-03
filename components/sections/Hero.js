@@ -55,7 +55,7 @@ export default function Hero({ locale = "es" }) {
             {t.helpDesk}
           </a>
           <a
-            href="/recursos/portafolio/Brochure%20Spectrum_CV.pdf"
+            href="/recursos/portafolio/Brochure%20Spectrum_CVD.pdf"
             download
             className="btn btn-outline"
           >
