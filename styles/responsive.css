@@ -257,16 +257,16 @@
   }
 
   .ai-carousel-card {
-    width: 155px;
+    width: min(260px, 78vw);
     padding: 18px 16px;
   }
 
-  .ai-carousel-card.is-prev {
-    transform: translate(calc(-50% - 95px), -50%) scale(0.78);
-  }
-
+  /* En telefonos angostos las tarjetas vecinas ya no caben sin desbordar
+     el wrap (32px de padding): se ocultan y solo se ve la tarjeta activa. */
+  .ai-carousel-card.is-prev,
   .ai-carousel-card.is-next {
-    transform: translate(calc(-50% + 95px), -50%) scale(0.78);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .units-track {
@@ -274,16 +274,14 @@
   }
 
   .unit-card {
-    width: 230px;
+    width: min(280px, 80vw);
     padding: 24px 20px;
   }
 
-  .unit-card.is-prev {
-    transform: translate(calc(-50% - 165px), -50%) scale(0.8);
-  }
-
+  .unit-card.is-prev,
   .unit-card.is-next {
-    transform: translate(calc(-50% + 165px), -50%) scale(0.8);
+    opacity: 0;
+    pointer-events: none;
   }
 
   .hero-content {
