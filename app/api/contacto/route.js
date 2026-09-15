@@ -56,7 +56,7 @@ export async function POST(request) {
 
   const senderEmail = process.env.BREVO_SENDER_EMAIL;
   const senderName = process.env.BREVO_SENDER_NAME || "Spectrum";
-  const notifyTo = process.env.CONTACT_NOTIFY_EMAIL || "contacto@spectrumt.co";
+  const notifyTo = process.env.CONTACT_NOTIFY_EMAIL || "soporte@spectrumt.co";
   const infoListId = process.env.BREVO_LIST_ID_INFO;
 
   if (!senderEmail) {

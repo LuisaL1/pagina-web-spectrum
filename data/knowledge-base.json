@@ -138,7 +138,7 @@
     },
     {
       "pregunta": "¿Cómo solicito una cotización o asesoría?",
-      "respuesta": "Puedes escribir a contacto@spectrumt.co, usar la Mesa de Ayuda en soporte.spectrumt.co, o llenar el formulario de 'Solicitar información' en cualquiera de las páginas de soluciones del sitio."
+      "respuesta": "Puedes escribir a soporte@spectrumt.co, usar la Mesa de Ayuda en soporte.spectrumt.co, o llenar el formulario de 'Solicitar información' en cualquiera de las páginas de soluciones del sitio."
     },
     {
       "pregunta": "¿En qué país opera Spectrum?",
@@ -150,7 +150,7 @@
     }
   ],
   "contacto": {
-    "correo": "contacto@spectrumt.co",
+    "correo": "soporte@spectrumt.co",
     "mesa_de_ayuda": "https://soporte.spectrumt.co",
     "sitio_web": "https://spectrumt.co",
     "pais": "Colombia"

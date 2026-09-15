@@ -26,7 +26,7 @@ const content = {
     sending: "Enviando...",
     submit: "Enviar solicitud",
     genericError:
-      "No pudimos enviar su solicitud. Intente de nuevo o escríbanos a contacto@spectrumt.co.",
+      "No pudimos enviar su solicitud. Intente de nuevo o escríbanos a soporte@spectrumt.co.",
   },
   en: {
     requestInfo: "Request information",
@@ -48,7 +48,7 @@ const content = {
     sending: "Sending...",
     submit: "Submit request",
     genericError:
-      "We couldn't send your request. Please try again or email us at contacto@spectrumt.co.",
+      "We couldn't send your request. Please try again or email us at soporte@spectrumt.co.",
   },
 };
 

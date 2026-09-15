@@ -14,7 +14,7 @@ const content = {
     noInfo:
       "No dispongo de información suficiente para responder esa consulta. Te recomiendo contactar directamente con nuestro equipo.",
     connectionError:
-      "Tuvimos un problema de conexión. Intenta de nuevo o escribe a contacto@spectrumt.co.",
+      "Tuvimos un problema de conexión. Intenta de nuevo o escribe a soporte@spectrumt.co.",
   },
   en: {
     greeting: "Hi, I'm SpectrIA. How can I help you?",
@@ -26,7 +26,7 @@ const content = {
     noInfo:
       "I don't have enough information to answer that question. I'd recommend contacting our team directly.",
     connectionError:
-      "We had a connection issue. Please try again or email us at contacto@spectrumt.co.",
+      "We had a connection issue. Please try again or email us at soporte@spectrumt.co.",
   },
 };
 
