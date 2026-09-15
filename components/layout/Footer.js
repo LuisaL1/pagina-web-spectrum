@@ -32,7 +32,7 @@ const footerColumnsEs = [
   {
     title: "Contacto",
     links: [
-      { label: "contacto@spectrumt.co", href: "mailto:contacto@spectrumt.co" },
+      { label: "soporte@spectrumt.co", href: "mailto:soporte@spectrumt.co" },
       { label: "spectrumt.co", href: "#" },
       { label: "Colombia", href: "#" },
     ],
@@ -69,7 +69,7 @@ const footerColumnsEn = [
   {
     title: "Contact",
     links: [
-      { label: "contacto@spectrumt.co", href: "mailto:contacto@spectrumt.co" },
+      { label: "soporte@spectrumt.co", href: "mailto:soporte@spectrumt.co" },
       { label: "spectrumt.co", href: "#" },
       { label: "Colombia", href: "#" },
     ],
@@ -113,7 +113,12 @@ export default function Footer({ locale = "es" }) {
             </a>
             <p>{t.tagline}</p>
             <div className="social">
-              <a href="#" aria-label="LinkedIn">
+              <a
+                href="https://www.linkedin.com/company/spectrum-technologyco/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
                 <LinkedInIcon size={15} />
               </a>
               <a
