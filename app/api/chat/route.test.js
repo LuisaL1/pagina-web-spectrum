@@ -192,4 +192,48 @@ describe("/api/chat", () => {
     expect(sent.systemInstruction.parts[0].text).toMatch(/CONFIDENCIALIDAD/);
     vi.unstubAllGlobals();
   });
+
+  it("une todas las partes de texto de Gemini y descarta respuestas cortadas", async () => {
+    process.env.GEMINI_API_KEY = "test-key";
+    const multi = {
+      candidates: [
+        {
+          content: {
+            parts: [{ text: "Primera parte. " }, { text: "Segunda parte." }],
+          },
+        },
+      ],
+    };
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValue(
+          new Response(JSON.stringify(multi), { status: 200 }),
+        ),
+    );
+    const ok = await (await post(say("como estan mis respaldos"))).json();
+    expect(ok.source).toBe("gemini");
+    expect(ok.reply).toBe("Primera parte. Segunda parte.");
+
+    const cut = {
+      candidates: [
+        {
+          content: {
+            parts: [{ text: "Ofrecemos seis frentes de soluciones:" }],
+          },
+        },
+      ],
+    };
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValue(new Response(JSON.stringify(cut), { status: 200 })),
+    );
+    const res = await (await post(say("que servicios ofrecen"))).json();
+    expect(res.source).toBe("local-fallback");
+    expect(res.reply).toMatch(/Ciberseguridad/);
+    vi.unstubAllGlobals();
+  });
 });

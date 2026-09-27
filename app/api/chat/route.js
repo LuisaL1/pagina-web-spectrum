@@ -130,9 +130,23 @@ export async function POST(request) {
     return local("local-gemini");
   }
 
-  const raw = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim() || "";
+  const parts = data?.candidates?.[0]?.content?.parts || [];
+  const raw = parts
+    .filter((part) => typeof part?.text === "string" && !part.thought)
+    .map((part) => part.text)
+    .join("")
+    .trim();
+  // Una respuesta que termina en ":" quedo cortada (sin la lista o el cierre).
+  const truncated = /[:,]\s*$/.test(raw);
+
   const checked = sanitizeOutput(raw);
-  if (!raw || raw === fallback || !checked.safe) {
+  if (!raw || raw === fallback || truncated || !checked.safe) {
+    console.warn("chat: respuesta de Gemini descartada", {
+      empty: !raw,
+      generic: raw === fallback,
+      truncated,
+      unsafe: !checked.safe,
+    });
     return local("local-fallback");
   }
 
