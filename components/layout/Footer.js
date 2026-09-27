@@ -19,6 +19,7 @@ const footerColumnsEs = [
       { label: "Ciberseguridad", href: "#soluciones" },
       { label: "Conectividad", href: "#soluciones" },
       { label: "Servicios de TI", href: "#soluciones" },
+      { label: "Desarrollo a la medida", href: "#soluciones" },
     ],
   },
   {
@@ -56,6 +57,7 @@ const footerColumnsEn = [
       { label: "Cybersecurity", href: "#soluciones" },
       { label: "Connectivity", href: "#soluciones" },
       { label: "IT services", href: "#soluciones" },
+      { label: "Custom development", href: "#soluciones" },
     ],
   },
   {
@@ -155,7 +157,9 @@ export default function Footer({ locale = "es" }) {
         <div className="footer-bottom">
           <p>{t.rights}</p>
           <div className="footer-legal">
-            <a href={localizedHref(locale, "/politica-de-datos")}>{t.privacy}</a>
+            <a href={localizedHref(locale, "/politica-de-datos")}>
+              {t.privacy}
+            </a>
             <a href="#">{t.terms}</a>
           </div>
         </div>

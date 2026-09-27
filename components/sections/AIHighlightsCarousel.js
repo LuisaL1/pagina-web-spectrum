@@ -50,8 +50,16 @@ const highlightsEn = [
 ];
 
 const labels = {
-  es: { prev: "Ver highlight anterior", next: "Ver siguiente highlight", goTo: (title) => `Ir al highlight ${title}` },
-  en: { prev: "View previous highlight", next: "View next highlight", goTo: (title) => `Go to ${title} highlight` },
+  es: {
+    prev: "Ver highlight anterior",
+    next: "Ver siguiente highlight",
+    goTo: (title) => `Ir al highlight ${title}`,
+  },
+  en: {
+    prev: "View previous highlight",
+    next: "View next highlight",
+    goTo: (title) => `Go to ${title} highlight`,
+  },
 };
 
 const total = highlightsEs.length;
@@ -70,41 +78,78 @@ export default function AIHighlightsCarousel({ locale = "es" }) {
   const highlights = locale === "en" ? highlightsEn : highlightsEs;
   const l = labels[locale] || labels.es;
   const [active, setActive] = useState(0);
-  const touchStartX = useRef(null);
+  const [dragX, setDragX] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const drag = useRef({ startX: null, moved: false });
 
   function go(direction) {
     setActive((current) => (current + direction + total) % total);
   }
 
-  function handleTouchStart(event) {
-    touchStartX.current = event.touches[0].clientX;
+  // Arrastre con el dedo (o el mouse): las tarjetas siguen el gesto.
+  function handlePointerDown(event) {
+    drag.current = { startX: event.clientX, moved: false };
+    setDragging(true);
   }
 
-  function handleTouchEnd(event) {
-    if (touchStartX.current === null) return;
-    const deltaX = event.changedTouches[0].clientX - touchStartX.current;
+  function handlePointerMove(event) {
+    if (drag.current.startX === null) return;
+    const deltaX = event.clientX - drag.current.startX;
+    if (Math.abs(deltaX) > 6) drag.current.moved = true;
+    setDragX(Math.max(-100, Math.min(100, deltaX)));
+  }
+
+  function handlePointerEnd(event) {
+    if (drag.current.startX === null) return;
+    const deltaX = event.clientX - drag.current.startX;
     if (deltaX > SWIPE_THRESHOLD) go(-1);
     else if (deltaX < -SWIPE_THRESHOLD) go(1);
-    touchStartX.current = null;
+    drag.current.startX = null;
+    setDragX(0);
+    setDragging(false);
+  }
+
+  function handleClickCapture(event) {
+    if (!drag.current.moved) return;
+    event.preventDefault();
+    event.stopPropagation();
+    drag.current.moved = false;
   }
 
   return (
     <div className="ai-carousel">
       <div
-        className="ai-carousel-track"
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
+        className={`ai-carousel-track${dragging ? " is-dragging" : ""}`}
+        style={{ "--drag": `${dragX}px` }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerEnd}
+        onPointerCancel={handlePointerEnd}
+        onPointerLeave={handlePointerEnd}
+        onClickCapture={handleClickCapture}
       >
-        {highlights.map((item, index) => (
-          <div
-            className={`ai-carousel-card is-${positionOf(index, active)}`}
-            key={item.num}
-          >
-            <p className="num">{item.num}</p>
-            <h3>{item.title}</h3>
-            <p>{item.desc}</p>
-          </div>
-        ))}
+        <div className="ai-carousel-slides">
+          {highlights.map((item, index) => {
+            const position = positionOf(index, active);
+            return (
+              <div
+                className={`ai-carousel-card is-${position}`}
+                key={item.num}
+                onClick={
+                  position === "prev"
+                    ? () => go(-1)
+                    : position === "next"
+                      ? () => go(1)
+                      : undefined
+                }
+              >
+                <p className="num">{item.num}</p>
+                <h3>{item.title}</h3>
+                <p>{item.desc}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
       <div className="ai-carousel-controls">
         <button

@@ -1,104 +1,155 @@
+"use client";
+
+import { useRef, useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 
+// Logos en /logos/aliados/bw: versiones monocromas, recortadas al contenido y
+// escaladas para que todas tengan el mismo peso visual (w x h = tamano en px
+// a 1x; el archivo esta a 2x). Se muestran en este orden, 6 por pagina.
 const partners = [
-  { name: "Adobe", logo: "adobe.png", width: 1350, height: 356 },
-  { name: "Aranda", logo: "aranda.png", width: 2233, height: 874 },
-  { name: "Aruba", logo: "aruba.png", width: 1990, height: 507 },
-  {
-    name: "Check Point",
-    logo: "check-point.png",
-    width: 500,
-    height: 224,
-  },
-  { name: "Pentera", logo: "pentera.png", width: 390, height: 496 },
-  { name: "AWS", logo: "aws.png", width: 2000, height: 1178 },
-  {
-    name: "CrowdStrike",
-    logo: "crowdstrike.png",
-    width: 1875,
-    height: 835,
-  },
-  { name: "ExaGrid", logo: "exagrid.png", width: 288, height: 58 },
-  {
-    name: "Extreme Networks",
-    logo: "extreme.png",
-    width: 540,
-    height: 132,
-  },
-  { name: "KELA", logo: "kela.png", width: 2000, height: 505 },
-  { name: "Fortinet", logo: "fortinet.png", width: 1256, height: 995 },
-  {
-    name: "Google Cloud",
-    logo: "google-cloud.png",
-    width: 4096,
-    height: 2564,
-  },
-  { name: "Hitachi", logo: "hitachi.png", width: 2728, height: 471 },
-  { name: "HP", logo: "hp.png", width: 3000, height: 3000 },
-  { name: "IBM", logo: "ibm.png", width: 1088, height: 442 },
-  { name: "Lenovo", logo: "lenovo.png", width: 215, height: 43 },
-  { name: "Microsoft", logo: "microsoft.png", width: 662, height: 476 },
-  { name: "Nutanix", logo: "nutanix.png", width: 615, height: 522 },
-  { name: "TrendAI", logo: "trend-ai.png", width: 684, height: 178 },
-  { name: "Veeam", logo: "veeam.png", width: 3703, height: 1123 },
-  {
-    name: "SentinelOne",
-    logo: "sentinelone.png",
-    width: 1004,
-    height: 573,
-  },
-  { name: "Broadcom", logo: "broadcom.png", width: 603, height: 374 },
-  { name: "Zoho", logo: "zoho.png", width: 1581, height: 676 },
+  { name: "Microsoft", logo: "microsoft.png", w: 75, h: 54 },
+  { name: "AWS", logo: "aws.png", w: 90, h: 54 },
+  { name: "Fortinet", logo: "fortinet.png", w: 68, h: 54 },
+  { name: "CrowdStrike", logo: "crowdstrike.png", w: 118, h: 53 },
+  { name: "IBM", logo: "ibm.png", w: 124, h: 50 },
+  { name: "Veeam", logo: "veeam.png", w: 143, h: 43 },
+  { name: "Google Cloud", logo: "google-cloud.png", w: 86, h: 54 },
+  { name: "Nutanix", logo: "nutanix.png", w: 64, h: 54 },
+  { name: "Check Point", logo: "check-point.png", w: 118, h: 53 },
+  { name: "HP", logo: "hp.png", w: 54, h: 54 },
+  { name: "Lenovo", logo: "lenovo.png", w: 170, h: 34 },
+  { name: "Broadcom", logo: "broadcom.png", w: 87, h: 54 },
+  { name: "Hitachi", logo: "hitachi.png", w: 170, h: 29 },
+  { name: "SentinelOne", logo: "sentinelone.png", w: 95, h: 54 },
+  { name: "TrendAI", logo: "trend-ai.png", w: 154, h: 40 },
+  { name: "Zoho", logo: "zoho.png", w: 121, h: 51 },
+  { name: "Adobe", logo: "adobe.png", w: 153, h: 40 },
+  { name: "Aruba", logo: "aruba.png", w: 156, h: 40 },
+  { name: "Aranda", logo: "aranda.png", w: 126, h: 49 },
+  { name: "Pentera", logo: "pentera.png", w: 42, h: 54 },
+  { name: "ExaGrid", logo: "exagrid.png", w: 170, h: 34 },
+  { name: "Extreme Networks", logo: "extreme.png", w: 159, h: 39 },
+  { name: "KELA", logo: "kela.png", w: 157, h: 40 },
 ];
-
-const mid = Math.ceil(partners.length / 2);
-const rows = [partners.slice(0, mid), partners.slice(mid)];
-
-function LogoRow({ items, reverse }) {
-  const track = [...items, ...items];
-  return (
-    <div className="logo-marquee">
-      <div className={`logo-track${reverse ? " reverse" : ""}`}>
-        {track.map((partner, i) => (
-          <div className="logo-pill" key={`${partner.name}-${i}`}>
-            <Image
-              src={`/logos/aliados/web/${partner.logo}`}
-              alt={partner.name}
-              width={partner.width}
-              height={partner.height}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 const content = {
   es: {
-    eyebrow: "Aliados tecnológicos",
-    heading: "Respaldados por los líderes de la industria",
+    title: "Tecnología respaldada por líderes de la industria",
+    goTo: (n) => `Ir al grupo de aliados ${n}`,
   },
   en: {
-    eyebrow: "Technology partners",
-    heading: "Backed by industry leaders",
+    title: "Technology backed by industry leaders",
+    goTo: (n) => `Go to partners group ${n}`,
   },
 };
 
+const QUERIES = ["(max-width: 560px)", "(max-width: 980px)"];
+
+function subscribe(callback) {
+  const lists = QUERIES.map((q) => window.matchMedia(q));
+  lists.forEach((list) => list.addEventListener("change", callback));
+  return () =>
+    lists.forEach((list) => list.removeEventListener("change", callback));
+}
+
+function getPerPage() {
+  if (window.matchMedia(QUERIES[0]).matches) return 3;
+  if (window.matchMedia(QUERIES[1]).matches) return 4;
+  return 6;
+}
+
+const SWIPE_THRESHOLD = 40;
+
 export default function Partners({ locale = "es" }) {
   const t = content[locale] || content.es;
+  const perPage = useSyncExternalStore(subscribe, getPerPage, () => 6);
+  const pages = Math.ceil(partners.length / perPage);
+  const [page, setPage] = useState(0);
+  const [dragX, setDragX] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const startX = useRef(null);
+  const current = Math.min(page, pages - 1);
+
+  function go(direction) {
+    setPage((current + direction + pages) % pages);
+  }
+
+  // Arrastre con el dedo (o el mouse): el carrusel sigue el gesto.
+  function handlePointerDown(event) {
+    startX.current = event.clientX;
+    setDragging(true);
+  }
+
+  function handlePointerMove(event) {
+    if (startX.current === null) return;
+    setDragX(event.clientX - startX.current);
+  }
+
+  function handlePointerEnd(event) {
+    if (startX.current === null) return;
+    const deltaX = event.clientX - startX.current;
+    if (deltaX > SWIPE_THRESHOLD) go(-1);
+    else if (deltaX < -SWIPE_THRESHOLD) go(1);
+    startX.current = null;
+    setDragX(0);
+    setDragging(false);
+  }
 
   return (
-    <section className="on-light" id="aliados">
+    <section className="partners-strip" id="aliados" aria-label={t.title}>
       <div className="wrap">
-        <div className="section-head">
-          <p className="eyebrow">{t.eyebrow}</p>
-          <h2>{t.heading}</h2>
+        <h2 className="partners-title">{t.title}</h2>
+        <div className="partners-carousel">
+          <div
+            className={`partners-viewport${dragging ? " is-dragging" : ""}`}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerEnd}
+            onPointerCancel={handlePointerEnd}
+            onPointerLeave={handlePointerEnd}
+          >
+            <div
+              className="partners-track"
+              style={{
+                "--per-page": perPage,
+                transform: `translateX(calc(-${current * 100}% + ${dragX}px))`,
+              }}
+            >
+              {Array.from({ length: pages }, (_, index) => (
+                <div
+                  className="partners-page"
+                  key={index}
+                  aria-hidden={index !== current}
+                >
+                  {partners
+                    .slice(index * perPage, (index + 1) * perPage)
+                    .map((partner) => (
+                      <div className="partners-cell" key={partner.name}>
+                        <Image
+                          src={`/logos/aliados/bw/${partner.logo}`}
+                          alt={partner.name}
+                          width={partner.w}
+                          height={partner.h}
+                          unoptimized
+                        />
+                      </div>
+                    ))}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="logo-marquee-group">
-        <LogoRow items={rows[0]} />
-        <LogoRow items={rows[1]} reverse />
+        <div className="partners-dashes">
+          {Array.from({ length: pages }, (_, index) => (
+            <button
+              key={index}
+              type="button"
+              className={`partners-dash${index === current ? " active" : ""}`}
+              aria-label={t.goTo(index + 1)}
+              onClick={() => setPage(index)}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

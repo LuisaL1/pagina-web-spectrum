@@ -18,15 +18,16 @@ import "@/styles/layout/header.css";
 import "@/styles/layout/footer.css";
 
 import "@/styles/sections/hero.css";
+import "@/styles/sections/unit-nav.css";
 import "@/styles/sections/ai-spotlight.css";
 import "@/styles/sections/ecosystem.css";
+import "@/styles/sections/quality-strip.css";
 import "@/styles/sections/solutions.css";
 import "@/styles/sections/partners.css";
 import "@/styles/sections/cases.css";
 import "@/styles/sections/team.css";
 import "@/styles/sections/culture.css";
 import "@/styles/sections/blog.css";
-import "@/styles/sections/novedades.css";
 import "@/styles/sections/cta-strip.css";
 import "@/styles/sections/data-policy.css";
 import "@/styles/sections/solution-detail.css";
@@ -77,7 +78,9 @@ export default async function RootLayout({ children }) {
       <body>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(buildOrganizationSchema()) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(buildOrganizationSchema()),
+          }}
         />
         <a className="skip-link" href="#main-content">
           {locale === "en" ? "Skip to content" : "Saltar al contenido"}

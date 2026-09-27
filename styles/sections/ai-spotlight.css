@@ -13,40 +13,189 @@
   align-items: center;
 }
 
+/* Manchas de color difuminadas para dar profundidad al fondo gris: halo rojo
+   tras la ilustracion, rojo tenue abajo a la izquierda y una luz blanca
+   arriba a la izquierda. */
+.ai-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      640px 560px at 76% 42%,
+      rgba(255, 13, 13, 0.2),
+      transparent 70%
+    ),
+    radial-gradient(
+      520px 420px at 8% 96%,
+      rgba(255, 13, 13, 0.11),
+      transparent 70%
+    ),
+    radial-gradient(
+      600px 460px at 18% 8%,
+      rgba(255, 255, 255, 0.55),
+      transparent 70%
+    );
+}
+
 .ai-spotlight-robot-wrap {
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
-  left: 53%;
+  left: 50%;
   z-index: 0;
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 24%);
-  mask-image: linear-gradient(to right, transparent 0%, black 24%);
+  container-type: size;
+  pointer-events: none;
+}
+
+/* Al interactuar con un circulo, el panel sube sobre el texto para que la
+   descripcion no quede tapada. */
+.ai-spotlight-robot-wrap:has(.ai-hotspot:hover, .ai-hotspot:focus-within) {
+  z-index: 3;
+}
+
+/* Caja con la proporcion exacta de AI-imagen.png (16:9): asi los puntos
+   interactivos, posicionados en %, caen sobre cada circulo. Se agranda
+   porque el dibujo ocupa solo ~55% del ancho del archivo, sin salirse del
+   alto disponible. */
+.ai-illustration {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  aspect-ratio: 16 / 9;
+  width: 125%;
+  width: min(125cqw, 135cqh);
+  transform: translate(-50%, calc(-50% - 40px));
 }
 
 .ai-spotlight-robot {
-  object-fit: cover;
-  object-position: center 15%;
+  object-fit: contain;
+}
+
+/* Circulos interactivos */
+.ai-hotspot {
+  position: absolute;
+  width: 13.34%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: auto;
+}
+
+.ai-hotspot:hover,
+.ai-hotspot:focus-within {
+  z-index: 2;
+}
+
+.ai-hotspot-btn {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
+}
+
+.ai-hotspot:hover .ai-hotspot-btn,
+.ai-hotspot-btn:focus-visible {
+  transform: scale(1.06);
+  box-shadow:
+    0 0 0 4px rgba(255, 13, 13, 0.3),
+    0 12px 26px rgba(255, 13, 13, 0.28);
+}
+
+.ai-hotspot-btn:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 4px;
+}
+
+.ai-hotspot-tip {
+  position: absolute;
+  left: 50%;
+  width: 230px;
+  padding: 14px 16px;
+  background: var(--color-white);
+  border: 1px solid rgba(2, 2, 2, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 14px 28px -8px rgba(2, 2, 2, 0.22);
+  color: var(--color-black);
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--transition-base),
+    transform var(--transition-base),
+    visibility var(--transition-base);
+}
+
+.ai-hotspot--below .ai-hotspot-tip {
+  top: calc(100% + 12px);
+  transform: translate(-50%, 6px);
+}
+
+.ai-hotspot--above .ai-hotspot-tip {
+  bottom: calc(100% + 12px);
+  transform: translate(-50%, -6px);
+}
+
+.ai-hotspot:hover .ai-hotspot-tip,
+.ai-hotspot:focus-within .ai-hotspot-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0);
+}
+
+.ai-hotspot-tip strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: var(--color-red);
+}
+
+.ai-hotspot-tip span {
+  display: block;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--color-gray-700);
+  text-transform: none;
+  font-weight: var(--fw-regular);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-hotspot-btn,
+  .ai-hotspot-tip {
+    transition: none;
+  }
+}
+
+/* Resplandor claro detras del dibujo para separarlo del fondo gris. */
+.ai-spotlight-robot-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0) 58%
+  );
 }
 
 .ai-spotlight-inner {
   position: relative;
   z-index: 1;
   width: 100%;
+  pointer-events: none;
 }
 
 .ai-spotlight-content {
   max-width: 560px;
-}
-
-.badge-new {
-  background: var(--color-red);
-  color: var(--color-white);
-  font-size: 10.5px;
-  font-weight: var(--fw-semibold);
-  padding: 3px 9px;
-  border-radius: 20px;
-  letter-spacing: 0.05em;
+  pointer-events: auto;
 }
 
 .ai-wordmark {
@@ -87,7 +236,7 @@
   color: var(--color-gray-700);
   text-transform: none;
   font-weight: var(--fw-regular);
-  margin-bottom: 36px;
+  margin-bottom: 28px;
 }
 
 /* Carrusel de highlights (tarjeta activa al centro, vecinas asomando) */
@@ -97,42 +246,86 @@
 
 .ai-carousel-track {
   position: relative;
-  height: 280px;
+  height: 240px;
   overflow: hidden;
   touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+  /* Las tarjetas de los extremos se desvanecen en vez de cortarse en seco. */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 7%,
+    black 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 7%,
+    black 93%,
+    transparent 100%
+  );
+}
+
+.ai-carousel-track.is-dragging {
+  cursor: grabbing;
+}
+
+.ai-carousel-slides {
+  position: absolute;
+  inset: 0;
+  transform: translateX(var(--drag, 0px));
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ai-carousel-track.is-dragging .ai-carousel-slides {
+  transition: none;
 }
 
 .ai-carousel-card {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 210px;
+  width: 196px;
+  height: 196px;
+  display: flex;
+  flex-direction: column;
   background: var(--color-white);
   border: 1px solid rgba(2, 2, 2, 0.06);
   border-radius: 20px;
   padding: 22px 20px;
   box-shadow: 0 8px 16px -6px rgba(2, 2, 2, 0.12);
-  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+  transition:
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
     opacity 0.45s ease;
 }
 
 .ai-carousel-card.is-active {
-  transform: translate(-50%, -50%) scale(1.08);
+  transform: translate(-50%, -50%) scale(1.06);
   z-index: 3;
   opacity: 1;
-  box-shadow: 0 14px 24px -8px rgba(255, 13, 13, 0.3);
+  box-shadow: 0 8px 14px -8px rgba(255, 13, 13, 0.28);
 }
 
 .ai-carousel-card.is-prev {
-  transform: translate(calc(-50% - 165px), -50%) scale(0.85);
+  transform: translate(calc(-50% - 202px), -50%) scale(0.88);
   z-index: 2;
-  opacity: 0.55;
+  opacity: 0.6;
+  cursor: pointer;
 }
 
 .ai-carousel-card.is-next {
-  transform: translate(calc(-50% + 165px), -50%) scale(0.85);
+  transform: translate(calc(-50% + 202px), -50%) scale(0.88);
   z-index: 2;
-  opacity: 0.55;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.ai-carousel-card.is-prev:hover,
+.ai-carousel-card.is-next:hover {
+  opacity: 0.85;
 }
 
 .ai-carousel-card.is-hidden {
@@ -188,7 +381,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform var(--transition-base), border-color var(--transition-base);
+  transition:
+    transform var(--transition-base),
+    border-color var(--transition-base);
 }
 
 .ai-carousel-btn:hover {
@@ -210,18 +405,38 @@
   background: rgba(2, 2, 2, 0.2);
   padding: 0;
   cursor: pointer;
-  transition: background var(--transition-base), transform var(--transition-base);
+  transition:
+    background var(--transition-base),
+    transform var(--transition-base);
+}
+
+.ai-carousel-dot {
+  transition:
+    background var(--transition-base),
+    width var(--transition-base);
 }
 
 .ai-carousel-dot.active {
   background: var(--color-red);
-  transform: scale(1.3);
+  width: 22px;
+  border-radius: 4px;
 }
 
 .ai-spotlight-actions {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
+  align-items: stretch;
+}
+
+/* Compactos para que ambos quepan en una sola fila dentro de la columna. */
+.ai-spotlight-actions .btn {
+  justify-content: center;
+  min-height: 47px;
+  padding: 13px 18px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
 }
 
 .ai-spotlight .btn-primary {

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CaretIcon, CloseIcon, MenuIcon } from "../icons";
+import { CaretIcon } from "../icons";
 import {
   getSolutionsMenuColumns,
   getNosotrosMenuColumns,
@@ -19,8 +19,10 @@ const content = {
     casos: "Casos de exito",
     blog: "Blog",
     contacto: "Contacto",
+    servicios: "Servicios",
     helpDesk: "Mesa de ayuda",
     openMenu: "Abrir menu",
+    closeMenu: "Cerrar menu",
     langLabel: "Selector de idioma",
   },
   en: {
@@ -29,8 +31,10 @@ const content = {
     casos: "Success stories",
     blog: "Blog",
     contacto: "Contact",
+    servicios: "Services",
     helpDesk: "Help desk",
     openMenu: "Open menu",
+    closeMenu: "Close menu",
     langLabel: "Language selector",
   },
 };
@@ -43,7 +47,11 @@ function MegaMenu({ id, columns, onLinkClick }) {
           <div className="mega-menu-col" key={column.heading}>
             <h4>{column.heading}</h4>
             {column.items.map((item) => (
-              <Link key={`${item.href}-${item.title}`} href={item.href} onClick={onLinkClick}>
+              <Link
+                key={`${item.href}-${item.title}`}
+                href={item.href}
+                onClick={onLinkClick}
+              >
                 <strong>{item.title}</strong>
                 {item.desc && <small>{item.desc}</small>}
               </Link>
@@ -59,10 +67,17 @@ export default function Header({ locale = "es" }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [activeId, setActiveId] = useState(null);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
   const t = content[locale] || content.es;
-  const navLinks = [{ href: locale === "en" ? "/en/#contacto" : "/#contacto", label: t.contacto, id: "contacto" }];
+  const navLinks = [
+    {
+      href: locale === "en" ? "/en/#contacto" : "/#contacto",
+      label: t.contacto,
+      id: "contacto",
+    },
+  ];
   const nosotrosMenuColumns = getNosotrosMenuColumns(locale);
   const solutionsMenuColumns = getSolutionsMenuColumns(locale);
   const blogMenuColumns = getBlogMenuColumns(locale);
@@ -77,6 +92,15 @@ export default function Header({ locale = "es" }) {
     setMenuOpen(false);
     setOpenDropdown(null);
   };
+
+  // La barra superior se oculta al bajar; histeresis para evitar parpadeos.
+  useEffect(() => {
+    const onScroll = () =>
+      setScrolled((prev) => (prev ? window.scrollY > 10 : window.scrollY > 80));
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     function handleKeydown(event) {
@@ -100,8 +124,10 @@ export default function Header({ locale = "es" }) {
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.body.classList.toggle("nav-open", menuOpen);
     return () => {
       document.body.style.overflow = "";
+      document.body.classList.remove("nav-open");
     };
   }, [menuOpen]);
 
@@ -117,7 +143,7 @@ export default function Header({ locale = "es" }) {
           if (entry.isIntersecting) setActiveId(entry.target.id);
         });
       },
-      { rootMargin: "-45% 0px -50% 0px" }
+      { rootMargin: "-45% 0px -50% 0px" },
     );
 
     sections.forEach((section) => observer.observe(section));
@@ -126,7 +152,17 @@ export default function Header({ locale = "es" }) {
 
   return (
     <>
-      <header className="main-nav">
+      <header className={`main-nav${scrolled ? " is-scrolled" : ""}`}>
+        <div className="top-bar">
+          <div className="wrap top-bar-inner">
+            <div className="top-bar-links">
+              <a href="mailto:soporte@spectrumt.co">soporte@spectrumt.co</a>
+              <a href={locale === "en" ? "/en/#soluciones" : "/#soluciones"}>
+                {t.servicios}
+              </a>
+            </div>
+          </div>
+        </div>
         <div className="wrap nav-row">
           <Link href={locale === "en" ? "/en" : "/"} className="logo">
             <Image
@@ -138,6 +174,14 @@ export default function Header({ locale = "es" }) {
               priority
             />
           </Link>
+
+          {menuOpen && (
+            <div
+              className="nav-backdrop"
+              aria-hidden="true"
+              onClick={closeMenu}
+            />
+          )}
 
           <nav
             className={`primary${menuOpen ? " is-open" : ""}`}
@@ -158,7 +202,7 @@ export default function Header({ locale = "es" }) {
                   aria-controls="dropdown-nosotros"
                   onClick={() =>
                     setOpenDropdown((open) =>
-                      open === "nosotros" ? null : "nosotros"
+                      open === "nosotros" ? null : "nosotros",
                     )
                   }
                 >
@@ -181,7 +225,7 @@ export default function Header({ locale = "es" }) {
                   aria-controls="dropdown-soluciones"
                   onClick={() =>
                     setOpenDropdown((open) =>
-                      open === "soluciones" ? null : "soluciones"
+                      open === "soluciones" ? null : "soluciones",
                     )
                   }
                 >
@@ -269,14 +313,18 @@ export default function Header({ locale = "es" }) {
               {t.helpDesk}
             </a>
             <button
-              className="mobile-toggle"
+              className={`mobile-toggle${menuOpen ? " is-open" : ""}`}
               type="button"
               aria-expanded={menuOpen}
               aria-controls="menu-principal"
-              aria-label={t.openMenu}
+              aria-label={menuOpen ? t.closeMenu : t.openMenu}
               onClick={() => setMenuOpen((open) => !open)}
             >
-              {menuOpen ? <CloseIcon size={20} /> : <MenuIcon size={20} />}
+              <span className="burger" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
             </button>
           </div>
         </div>

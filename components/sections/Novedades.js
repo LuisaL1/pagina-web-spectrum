@@ -3,10 +3,11 @@ import Image from "next/image";
 import { getNews } from "@/data/news";
 import { ArrowRightIcon } from "../icons";
 import { localizedHref } from "@/lib/i18n";
+import BackLink from "../widgets/BackLink";
 
 const content = {
   es: {
-    backHome: "Volver al home",
+    backHome: "Volver al inicio",
     eyebrow: "Spectrum",
     heading: "Novedades",
     lead: "Noticias, alianzas, certificaciones y eventos de Spectrum.",
@@ -29,72 +30,79 @@ export default function Novedades({ locale = "es" }) {
   const [featured, ...rest] = news;
 
   return (
-    <section className="on-light pattern-bg" id="novedades">
+    <section className="blog-archive pattern-bg-after" id="novedades">
       <div className="wrap">
-        <Link className="article-back" href={localizedHref(locale, "/#blog")}>
-          <ArrowRightIcon size={13} className="article-back-icon" />
+        <BackLink className="page-back" href={localizedHref(locale, "/")}>
+          <ArrowRightIcon size={14} className="page-back-icon" />
           {t.backHome}
-        </Link>
+        </BackLink>
         <div className="section-head">
           <p className="eyebrow">{t.eyebrow}</p>
           <h2>{t.heading}</h2>
-          <p className="gray-500">{t.lead}</p>
+          <p>{t.lead}</p>
         </div>
 
         {featured && (
-          <article className="news-featured">
-            <div className="blog-thumb news-featured-thumb">
-              {featured.bg && (
-                <Image
-                  src={featured.bg}
-                  alt=""
-                  fill
-                  sizes="(max-width: 900px) 100vw, 50vw"
-                  className="blog-thumb-bg"
-                />
-              )}
-              <span>{featured.category}</span>
-            </div>
-            <div className="news-featured-body blog-body">
-              <p className="date">
+          <article className="blog-hero-card blog-hero-card--wide">
+            {featured.bg && (
+              <Image
+                src={featured.bg}
+                alt=""
+                fill
+                priority
+                sizes="(max-width: 1200px) 100vw, 1136px"
+                className="blog-hero-img"
+              />
+            )}
+            <div className="blog-hero-content">
+              <div className="blog-pills">
+                {featured.kicker && (
+                  <span className="blog-pill blog-pill--glass">
+                    {featured.kicker}
+                  </span>
+                )}
+                <span className="blog-pill">{featured.category}</span>
+              </div>
+              <p className="blog-meta">
                 {t.featured} &middot; {featured.date}
               </p>
               <h3>{featured.title}</h3>
-              <p className="news-excerpt">{featured.excerpt}</p>
+              <p className="blog-excerpt">{featured.excerpt}</p>
               <Link
-                className="more"
+                className="blog-link blog-link--light"
                 href={localizedHref(locale, `/novedades/${featured.slug}`)}
               >
-                {t.readMore} <ArrowRightIcon size={13} />
+                {t.readMore} <ArrowRightIcon size={16} />
               </Link>
             </div>
           </article>
         )}
 
         {rest.length > 0 && (
-          <div className="news-list">
+          <div className="blog-archive-grid">
             {rest.map((item) => (
-              <article className="news-list-item" key={item.slug}>
-                <div className="blog-thumb news-list-thumb">
+              <article className="blog-tile" key={item.slug}>
+                <div className="blog-tile-thumb">
                   {item.bg && (
                     <Image
                       src={item.bg}
                       alt=""
                       fill
-                      sizes="160px"
-                      className="blog-thumb-bg"
+                      sizes="(max-width: 700px) 100vw, 50vw"
+                      className="blog-row-img"
                     />
                   )}
-                  <span>{item.category}</span>
+                  <span className="blog-pill">{item.category}</span>
                 </div>
-                <div className="news-list-body blog-body">
-                  <p className="date">{item.date}</p>
+                <div className="blog-tile-body">
+                  <p className="blog-meta">{item.date}</p>
                   <h3>{item.title}</h3>
+                  <p className="blog-tile-excerpt">{item.excerpt}</p>
                   <Link
-                    className="more"
+                    className="blog-link"
                     href={localizedHref(locale, `/novedades/${item.slug}`)}
                   >
-                    {t.readMore} <ArrowRightIcon size={13} />
+                    {t.readMore} <ArrowRightIcon size={16} />
                   </Link>
                 </div>
               </article>

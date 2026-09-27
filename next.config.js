@@ -1,6 +1,20 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
+  async redirects() {
+    return [
+      {
+        source: "/novedades/spectrum-cumple-5-anos",
+        destination: "/novedades/aniversario",
+        permanent: true,
+      },
+      {
+        source: "/en/novedades/spectrum-cumple-5-anos",
+        destination: "/en/novedades/aniversario",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {

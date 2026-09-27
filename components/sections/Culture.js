@@ -1,3 +1,13 @@
+import { BsIcon } from "@/components/icons";
+
+const valueIcons = [
+  "people",
+  "lightbulb",
+  "headset",
+  "mortarboard",
+  "shield-check",
+];
+
 const valoresEs = [
   {
     title: "Colaboramos",
@@ -51,7 +61,8 @@ const content = {
     lead: "En Spectrum creemos que la tecnología adquiere valor real cuando se construye con propósito. Nuestra cultura combina conocimiento, colaboración e innovación para transformar desafíos en soluciones que generan impacto.",
     bannerPrefix: "No solo desarrollamos ",
     bannerSpan: "tecnología",
-    bannerSuffix: ". Construimos soluciones, conocimiento y relaciones que perduran.",
+    bannerSuffix:
+      ". Construimos soluciones, conocimiento y relaciones que perduran.",
   },
   en: {
     eyebrow: "Organizational culture",
@@ -59,7 +70,8 @@ const content = {
     lead: "At Spectrum, we believe technology gains real value when it's built with purpose. Our culture combines knowledge, collaboration and innovation to turn challenges into solutions that create impact.",
     bannerPrefix: "We don't just build ",
     bannerSpan: "technology",
-    bannerSuffix: ". We build solutions, knowledge and relationships that last.",
+    bannerSuffix:
+      ". We build solutions, knowledge and relationships that last.",
   },
 };
 
@@ -69,7 +81,7 @@ export default function Culture({ locale = "es" }) {
 
   return (
     <>
-      <section id="cultura">
+      <section id="cultura" className="about-light about-light--white">
         <div className="wrap">
           <div className="section-head">
             <p className="eyebrow">{t.eyebrow}</p>
@@ -77,18 +89,27 @@ export default function Culture({ locale = "es" }) {
             <p>{t.lead}</p>
           </div>
           <div className="culture-values">
-            {valores.map((valor) => (
-              <div className="culture-value" key={valor.title}>
-                <h3>{valor.title}</h3>
-                <p>{valor.desc}</p>
-              </div>
-            ))}
+            {valores.map((valor, index) => {
+              const icon = valueIcons[index];
+              return (
+                <div className="culture-value" key={valor.title}>
+                  <span className="culture-icon">
+                    <BsIcon name={icon} size={26} />
+                  </span>
+                  <h3>{valor.title}</h3>
+                  <p>{valor.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       <section className="culture-banner">
         <div className="wrap">
+          <span className="culture-quote-mark" aria-hidden="true">
+            &ldquo;
+          </span>
           <p>
             {t.bannerPrefix}
             <span>{t.bannerSpan}</span>

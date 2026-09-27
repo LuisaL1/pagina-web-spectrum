@@ -1,11 +1,9 @@
-import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import Header from "@/components/layout/Header";
+import ArticleView from "@/components/sections/ArticleView";
 import CtaStrip from "@/components/sections/CtaStrip";
 import Footer from "@/components/layout/Footer";
-import { ArrowRightIcon } from "@/components/icons";
-import { news, getNewsItemBySlug } from "@/data/news";
+import { news, getNewsItemBySlug, getNews } from "@/data/news";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
 import { buildBreadcrumbSchema } from "@/lib/structured-data";
 
@@ -34,6 +32,9 @@ export default async function NewsItemPage({ params }) {
   const { slug } = await params;
   const item = getNewsItemBySlug(slug, locale);
   if (!item) notFound();
+  const related = getNews(locale)
+    .filter((entry) => entry.slug !== slug)
+    .slice(0, 2);
 
   const breadcrumbSchema = buildBreadcrumbSchema([
     { name: "Inicio", path: "/" },
@@ -49,37 +50,13 @@ export default async function NewsItemPage({ params }) {
       />
       <Header locale={locale} />
       <main id="main-content">
-        <section className="on-light pattern-bg article-doc">
-          <div className="wrap article-wrap">
-            <Link className="article-back" href="/novedades">
-              <ArrowRightIcon size={13} className="article-back-icon" />
-              Volver a Novedades
-            </Link>
-            <p className="eyebrow">{item.category}</p>
-            <h1>{item.title}</h1>
-            <p className="article-meta">{item.date}</p>
-            <p className="article-lead">{item.excerpt}</p>
-
-            {item.bg && (
-              <div className="article-image">
-                <Image
-                  src={item.bg}
-                  alt=""
-                  fill
-                  sizes="(max-width: 900px) 100vw, 760px"
-                  priority
-                />
-              </div>
-            )}
-
-            {item.content.map((block, index) => (
-              <div key={index}>
-                {block.heading && <h2>{block.heading}</h2>}
-                <p>{block.body}</p>
-              </div>
-            ))}
-          </div>
-        </section>
+        <ArticleView
+          item={item}
+          kind="news"
+          basePath="/novedades"
+          related={related}
+          locale={locale}
+        />
 
         <CtaStrip locale={locale} />
       </main>

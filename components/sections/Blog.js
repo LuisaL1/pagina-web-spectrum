@@ -23,46 +23,80 @@ const content = {
 
 export default function Blog({ locale = "es" }) {
   const articles = getArticles(locale);
+  const [featured, ...rest] = articles;
   const t = content[locale] || content.es;
 
   return (
-    <section className="on-light pattern-bg" id="blog">
+    <section className="blog-section" id="blog">
       <div className="wrap">
         <div className="section-head">
           <p className="eyebrow">{t.eyebrow}</p>
           <h2>{t.heading}</h2>
-          <p className="gray-500">{t.lead}</p>
+          <p>{t.lead}</p>
         </div>
-        <div className="blog-grid">
-          {articles.map((article) => (
-            <article className="blog-card" key={article.slug}>
-              <div className="blog-thumb">
-                {article.bg && (
-                  <Image
-                    src={article.bg}
-                    alt=""
-                    fill
-                    sizes="(max-width: 900px) 100vw, 33vw"
-                    className="blog-thumb-bg"
-                  />
-                )}
-                <span>{article.category}</span>
-              </div>
-              <div className="blog-body">
-                <p className="date">{article.date}</p>
-                <h3>{article.title}</h3>
+
+        <div className="blog-showcase">
+          {featured && (
+            <article className="blog-hero-card">
+              {featured.bg && (
+                <Image
+                  src={featured.bg}
+                  alt=""
+                  fill
+                  sizes="(max-width: 980px) 100vw, 60vw"
+                  className="blog-hero-img"
+                />
+              )}
+              <div className="blog-hero-content">
+                <span className="blog-pill">{featured.category}</span>
+                <p className="blog-meta">{featured.date}</p>
+                <h3>{featured.title}</h3>
+                <p className="blog-excerpt">{featured.excerpt}</p>
                 <Link
-                  className="more"
-                  href={localizedHref(locale, `/blog/${article.slug}`)}
+                  className="blog-link blog-link--light"
+                  href={localizedHref(locale, `/blog/${featured.slug}`)}
                 >
-                  {t.readArticle} <ArrowRightIcon size={13} />
+                  {t.readArticle} <ArrowRightIcon size={16} />
                 </Link>
               </div>
             </article>
-          ))}
+          )}
+
+          <div className="blog-side">
+            {rest.map((article) => (
+              <article className="blog-row-card" key={article.slug}>
+                <div className="blog-row-thumb">
+                  {article.bg && (
+                    <Image
+                      src={article.bg}
+                      alt=""
+                      fill
+                      sizes="(max-width: 560px) 100vw, 20vw"
+                      className="blog-row-img"
+                    />
+                  )}
+                </div>
+                <div className="blog-row-body">
+                  <span className="blog-row-cat">{article.category}</span>
+                  <p className="blog-meta">{article.date}</p>
+                  <h3>{article.title}</h3>
+                  <Link
+                    className="blog-link"
+                    href={localizedHref(locale, `/blog/${article.slug}`)}
+                  >
+                    {t.readArticle} <ArrowRightIcon size={16} />
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
+
         <div className="blog-footer-cta">
-          <Link href={localizedHref(locale, "/novedades")} className="btn btn-primary">
+          <Link
+            href={localizedHref(locale, "/novedades")}
+            className="btn btn-primary"
+          >
             {t.viewNews}
           </Link>
         </div>

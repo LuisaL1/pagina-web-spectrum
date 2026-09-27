@@ -26,3 +26,24 @@
   position: relative;
   z-index: 1;
 }
+
+/*
+  Variante para secciones que ya usan ::before (manchas de color): el mismo
+  patron, dibujado en ::after y por debajo del contenido.
+*/
+.pattern-bg-after {
+  position: relative;
+  overflow: hidden;
+}
+
+.pattern-bg-after::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url("/fondos/patron-tile.png");
+  background-repeat: repeat;
+  background-size: 178px 320px;
+  opacity: 0.05;
+  pointer-events: none;
+}

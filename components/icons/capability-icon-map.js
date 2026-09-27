@@ -19,6 +19,7 @@ import {
   TrendIcon,
   ChipShieldIcon,
   PlugIcon,
+  CodeIcon,
 } from "./index";
 
 export const capabilityIconMap = {
@@ -42,4 +43,5 @@ export const capabilityIconMap = {
   trend: TrendIcon,
   "chip-shield": ChipShieldIcon,
   plug: PlugIcon,
+  code: CodeIcon,
 };

@@ -2,6 +2,8 @@ import { Suspense } from "react";
 import Header from "@/components/layout/Header";
 import Hero from "@/components/sections/Hero";
 import AISpotlight from "@/components/sections/AISpotlight";
+import UnitNav from "@/components/sections/UnitNav";
+import QualityStrip from "@/components/sections/QualityStrip";
 import Solutions from "@/components/sections/Solutions";
 import Cases from "@/components/sections/Cases";
 import CasesWithSector from "@/components/sections/CasesWithSector";
@@ -28,12 +30,14 @@ export default function HomeEn() {
       <Header locale="en" />
       <main id="main-content">
         <Hero locale="en" />
+        <UnitNav locale="en" />
         <AISpotlight locale="en" />
+        <QualityStrip locale="en" />
         <Solutions locale="en" />
+        <Partners locale="en" />
         <Suspense fallback={<Cases locale="en" />}>
           <CasesWithSector locale="en" />
         </Suspense>
-        <Partners locale="en" />
         <Blog locale="en" />
         <CtaStrip locale="en" />
       </main>

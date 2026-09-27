@@ -1,14 +1,145 @@
 /*
   sections/cta-strip.css
-  Estilos exclusivos de components/sections/CtaStrip.
+  Estilos exclusivos de components/sections/CtaStrip:
+  bloque "Nuestro enfoque" + franja final de contacto.
 */
 
+/* ---------- Nuestro enfoque ---------- */
+.approach {
+  padding: 88px 0;
+  background: linear-gradient(180deg, #050506 0%, #0d0d0f 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.approach-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.approach-photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--color-graphite);
+}
+
+.approach-photo img {
+  object-fit: cover;
+}
+
+/* Oscurece un poco la foto para que se integre con el fondo negro. */
+.approach-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(2, 2, 2, 0.05) 0%,
+    rgba(2, 2, 2, 0.45) 100%
+  );
+  pointer-events: none;
+}
+
+.approach-eyebrow {
+  margin-bottom: 14px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-red);
+}
+
+.approach-text h2 {
+  margin-bottom: 18px;
+  font-size: 42px;
+  line-height: 1.12;
+  text-transform: none;
+  letter-spacing: -0.01em;
+  color: var(--color-white);
+}
+
+.approach-text .approach-lead {
+  max-width: 520px;
+  margin-bottom: 26px;
+  font-size: 16px;
+  line-height: 1.7;
+  font-weight: var(--fw-regular);
+  text-transform: none;
+  color: var(--color-gray-300);
+}
+
+.approach-points {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.approach-points li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--color-white);
+}
+
+.approach-check {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid var(--color-red);
+  border-radius: 50%;
+  color: var(--color-red);
+}
+
+/* ---------- Franja de contacto ---------- */
 .cta-strip {
-  background: var(--color-red);
-  padding: 70px 0;
+  position: relative;
+  overflow: hidden;
+  padding: 80px 0;
+  background: #070708;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Lineas rojas en la esquina inferior derecha (el mismo patron de la seccion
+   de soluciones, espejado) y un resplandor rojo detras. */
+.cta-strip::before,
+.cta-strip::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+}
+
+.cta-strip::before {
+  width: clamp(220px, 32%, 480px);
+  aspect-ratio: 2000 / 1419;
+  background: url("/fondos/bordes-services-dark.svg") no-repeat 0 0 / 100% 100%;
+  transform: scaleX(-1);
+}
+
+.cta-strip::after {
+  width: 720px;
+  height: 420px;
+  background: radial-gradient(
+    ellipse at 85% 100%,
+    rgba(250, 0, 1, 0.16) 0%,
+    rgba(250, 0, 1, 0) 65%
+  );
 }
 
 .cta-strip .wrap {
+  position: relative;
+  z-index: 1;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,18 +148,52 @@
 }
 
 .cta-strip h2 {
-  font-size: 30px;
-  max-width: 480px;
-  line-height: 1.2;
-}
-
-.cta-strip-actions {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.cta-strip .btn-solid {
-  background: var(--color-graphite);
+  max-width: 520px;
+  margin-bottom: 14px;
+  font-size: 38px;
+  line-height: 1.15;
+  text-transform: none;
+  letter-spacing: -0.01em;
   color: var(--color-white);
+}
+
+.cta-strip .cta-strip-text p {
+  max-width: 420px;
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: var(--fw-regular);
+  text-transform: none;
+  color: var(--color-gray-300);
+}
+
+.cta-strip-btn {
+  gap: 12px;
+  padding: 16px 34px;
+  box-shadow: 0 12px 28px rgba(250, 0, 1, 0.3);
+  /* Deja libre el ancho del patron de lineas (32% del ancho, max 480px) menos
+     lo que ya separa el contenedor del borde de la pantalla, mas 24px. */
+  margin-right: max(
+    0px,
+    calc(min(32vw, 480px) - max(0px, (100vw - 1200px) / 2) - 32px + 24px)
+  );
+}
+
+.cta-strip-btn svg {
+  transition: transform var(--transition-base);
+}
+
+.cta-strip-btn:hover svg {
+  transform: translateX(4px);
+}
+
+/* En pantallas medianas el texto se estrecha para que el boton, que deja
+   libre el ancho del patron, siga en la misma fila. */
+@media (max-width: 1200px) {
+  .cta-strip h2 {
+    max-width: 440px;
+  }
+
+  .cta-strip .cta-strip-text p {
+    max-width: 400px;
+  }
 }

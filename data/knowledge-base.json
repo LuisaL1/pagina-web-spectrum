@@ -22,7 +22,7 @@
     {
       "seccion": "Soluciones",
       "ruta": "/soluciones/{slug}",
-      "descripcion": "Página de detalle de cada solución. Slugs disponibles: infraestructura-tecnologica, ciberseguridad, conectividad, servicios-de-ti, inteligencia-artificial."
+      "descripcion": "Página de detalle de cada solución. Slugs disponibles: infraestructura-tecnologica, ciberseguridad, conectividad, servicios-de-ti, inteligencia-artificial, desarrollo-a-la-medida."
     },
     {
       "seccion": "Equipo",
@@ -48,7 +48,9 @@
         "Hiperconvergencia (HCI): consolidación de cómputo, almacenamiento y virtualización en una sola plataforma.",
         "Centro de Operaciones de Red (NOC): monitoreo 24/7 con respuesta proactiva.",
         "Nube híbrida y privada: migración y gestión de cargas de trabajo.",
-        "Continuidad y respaldo: backup y recuperación ante desastres (DRP)."
+        "Continuidad y respaldo: backup y recuperación ante desastres (DRP).",
+        "Diseño de arquitectura TI: infraestructura a la medida de los procesos del cliente, pensada para crecer con su negocio.",
+        "Data centers, servidores y virtualización: implementación y administración de plataformas de cómputo y almacenamiento, con entornos virtualizados que optimizan recursos y reducen costos operativos."
       ],
       "pagina": "/soluciones/infraestructura-tecnologica"
     },
@@ -59,7 +61,11 @@
         "SOC 24/7: monitoreo y respuesta a incidentes en tiempo real.",
         "Hacking ético / Pentesting: pruebas de intrusión controladas.",
         "Seguridad de aplicaciones y APIs.",
-        "Gestión de vulnerabilidades."
+        "Gestión de vulnerabilidades.",
+        "Gestión de identidad y accesos: control robusto sobre quién accede a la información y cómo.",
+        "Protección perimetral y endpoint: defensa de redes y dispositivos frente a amenazas externas.",
+        "Cumplimiento normativo: alineación con ISO 27001 y normativas de protección de datos.",
+        "Respuesta a incidentes: protocolos de contención y recuperación ante eventos de seguridad."
       ],
       "pagina": "/soluciones/ciberseguridad"
     },
@@ -70,7 +76,11 @@
         "SD-WAN: enrutamiento inteligente del tráfico entre sedes.",
         "Redes LAN/WAN empresariales.",
         "Switching de Data Center.",
-        "Conectividad cifrada de extremo a extremo."
+        "Conectividad cifrada de extremo a extremo.",
+        "Enlaces dedicados: conexiones de alta velocidad con disponibilidad garantizada.",
+        "Wi-Fi corporativo: redes inalámbricas empresariales seguras y de alto rendimiento.",
+        "Optimización de ancho de banda: monitoreo y ajuste continuo para un uso eficiente de la red.",
+        "Soporte de red 24/7: atención permanente ante incidencias y necesidades de la red."
       ],
       "pagina": "/soluciones/conectividad"
     },
@@ -92,9 +102,24 @@
         "Automatización inteligente de procesos.",
         "Analítica predictiva.",
         "IA aplicada a ciberseguridad (detección de anomalías).",
-        "Integración con la infraestructura existente del cliente."
+        "Integración con la infraestructura existente del cliente.",
+        "Diagnóstico y estrategia de IA: identificación de las oportunidades de mayor impacto para el negocio.",
+        "IA generativa corporativa: asistentes virtuales y herramientas de productividad a la medida.",
+        "Gobierno y uso responsable: marco de buenas prácticas para un uso ético y seguro de la IA.",
+        "Adopción y capacitación de equipos: acompañamiento para incorporar la IA en el trabajo diario."
       ],
       "pagina": "/soluciones/inteligencia-artificial"
+    },
+    {
+      "nombre": "Desarrollo a la medida",
+      "resumen": "Aplicaciones, integraciones y automatizaciones construidas a la medida de los procesos y la operación de cada organización.",
+      "capacidades": [
+        "Aplicaciones web y móviles a la medida de los procesos del cliente.",
+        "Integración de sistemas y APIs entre aplicaciones, bases de datos y plataformas existentes.",
+        "Seguridad desde el diseño: buenas prácticas de desarrollo seguro.",
+        "Mantenimiento y evolución del software: soporte, mejoras y nuevas funcionalidades."
+      ],
+      "pagina": "/soluciones/desarrollo-a-la-medida"
     }
   ],
   "aliados_tecnologicos": [
@@ -134,7 +159,7 @@
   "preguntas_frecuentes": [
     {
       "pregunta": "¿Qué servicios ofrece Spectrum?",
-      "respuesta": "Spectrum ofrece cinco frentes complementarios: Infraestructura tecnológica, Ciberseguridad, Conectividad, Servicios de TI e Inteligencia Artificial, integrados como un solo ecosistema."
+      "respuesta": "Spectrum ofrece seis frentes complementarios: Infraestructura tecnológica, Ciberseguridad, Conectividad, Servicios de TI, Inteligencia Artificial y Desarrollo a la medida, integrados como un solo ecosistema."
     },
     {
       "pregunta": "¿Cómo solicito una cotización o asesoría?",

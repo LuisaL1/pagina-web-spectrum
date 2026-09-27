@@ -1,0 +1,75 @@
+/*
+  sections/unit-nav.css
+  Franja minimalista con las seis unidades de negocio, entre el inicio y la
+  seccion de IA.
+*/
+
+.unit-nav {
+  background: #050506;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.unit-nav-list {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+  list-style: none;
+}
+
+.unit-nav-list li {
+  flex: 0 0 auto;
+}
+
+.unit-nav-list li + li {
+  border-left: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.unit-nav-list a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 100%;
+  padding: 17px 22px;
+  font-size: 11px;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.1em;
+  line-height: 1.35;
+  white-space: nowrap;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--color-gray-500);
+  transition: color var(--transition-base);
+}
+
+.unit-nav-list a:hover {
+  color: var(--color-white);
+}
+
+.unit-nav-num {
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: rgba(250, 0, 1, 0.75);
+}
+
+.unit-nav-list a:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: -2px;
+}
+
+/* Cuando las seis unidades no caben en una linea, la fila se desplaza. */
+@media (max-width: 1320px) {
+  .unit-nav-list {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-inline: 0;
+    scrollbar-width: none;
+  }
+
+  .unit-nav-list::-webkit-scrollbar {
+    display: none;
+  }
+}

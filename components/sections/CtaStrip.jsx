@@ -1,17 +1,39 @@
-import { WhatsAppIcon } from "@/components/icons";
+import Image from "next/image";
+import { ArrowRightIcon, CheckIcon } from "@/components/icons";
 
 const WHATSAPP_NUMBER = "573124650754";
 
 const content = {
   es: {
-    heading: "Hablemos de la evolución de su infraestructura",
-    helpDesk: "Mesa de ayuda",
-    whatsapp: "Escribir por WhatsApp",
+    eyebrow: "Nuestro enfoque",
+    approachTitle: "Tecnología con propósito.",
+    approachText:
+      "Integramos infraestructura, seguridad, conectividad e inteligencia para diseñar ecosistemas tecnológicos robustos, resilientes y preparados para el futuro.",
+    points: [
+      "Soluciones a la medida de cada organización.",
+      "Acompañamiento experto en cada etapa del proyecto.",
+      "Operación segura, eficiente y disponible 24/7.",
+    ],
+    imageAlt:
+      "Manos de un especialista trabajando en un portátil con código en pantalla",
+    heading: "¿Listo para transformar tu organización?",
+    lead: "Conversemos sobre cómo podemos ayudarte a alcanzar tus objetivos tecnológicos.",
+    cta: "Hablemos",
   },
   en: {
-    heading: "Let's talk about the evolution of your infrastructure",
-    helpDesk: "Help desk",
-    whatsapp: "Message on WhatsApp",
+    eyebrow: "Our approach",
+    approachTitle: "Technology with purpose.",
+    approachText:
+      "We integrate infrastructure, security, connectivity and intelligence to design robust, resilient technology ecosystems that are ready for the future.",
+    points: [
+      "Solutions tailored to each organization.",
+      "Expert support at every stage of the project.",
+      "Secure, efficient operation available 24/7.",
+    ],
+    imageAlt: "Hands of a specialist working on a laptop with code on screen",
+    heading: "Ready to transform your organization?",
+    lead: "Let's talk about how we can help you reach your technology goals.",
+    cta: "Let's talk",
   },
 };
 
@@ -19,29 +41,52 @@ export default function CtaStrip({ locale = "es" }) {
   const t = content[locale] || content.es;
 
   return (
-    <section className="cta-strip" id="contacto">
-      <div className="wrap">
-        <h2>{t.heading}</h2>
-        <div className="cta-strip-actions">
-          <a
-            href="https://soporte.spectrumt.co"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-solid"
-          >
-            {t.helpDesk}
-          </a>
+    <>
+      <section className="approach" id="enfoque">
+        <div className="wrap approach-grid">
+          <div className="approach-photo">
+            <Image
+              src="/fondos/fondo-ciber.jpg"
+              alt={t.imageAlt}
+              fill
+              sizes="(max-width: 900px) 100vw, 50vw"
+            />
+          </div>
+          <div className="approach-text">
+            <p className="approach-eyebrow">{t.eyebrow}</p>
+            <h2>{t.approachTitle}</h2>
+            <p className="approach-lead">{t.approachText}</p>
+            <ul className="approach-points">
+              {t.points.map((point) => (
+                <li key={point}>
+                  <span className="approach-check" aria-hidden="true">
+                    <CheckIcon size={13} />
+                  </span>
+                  {point}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="cta-strip" id="contacto">
+        <div className="wrap">
+          <div className="cta-strip-text">
+            <h2>{t.heading}</h2>
+            <p>{t.lead}</p>
+          </div>
           <a
             href={`https://wa.me/${WHATSAPP_NUMBER}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-whatsapp"
+            className="btn btn-primary cta-strip-btn"
           >
-            <WhatsAppIcon size={16} />
-            {t.whatsapp}
+            {t.cta}
+            <ArrowRightIcon size={16} />
           </a>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

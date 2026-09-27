@@ -10,11 +10,16 @@ const CASOS_DE_USO = {
     { slug: "ciberseguridad", title: "SOC 24/7" },
     { slug: "ciberseguridad", title: "Hacking ético / Pentesting" },
     { slug: "conectividad", title: "SD-WAN" },
-    { slug: "conectividad", title: "Conectividad cifrada de extremo a extremo" },
+    {
+      slug: "conectividad",
+      title: "Conectividad cifrada de extremo a extremo",
+    },
     { slug: "servicios-de-ti", title: "Mesa de ayuda" },
     { slug: "servicios-de-ti", title: "Consultoría estratégica" },
     { slug: "inteligencia-artificial", title: "Automatización inteligente" },
     { slug: "inteligencia-artificial", title: "IA aplicada a ciberseguridad" },
+    { slug: "desarrollo-a-la-medida", title: "Aplicaciones web y móviles" },
+    { slug: "desarrollo-a-la-medida", title: "Integración de sistemas y APIs" },
   ],
   en: [
     { slug: "infraestructura-tecnologica", title: "Hyperconvergence (HCI)" },
@@ -27,6 +32,8 @@ const CASOS_DE_USO = {
     { slug: "servicios-de-ti", title: "Strategic consulting" },
     { slug: "inteligencia-artificial", title: "Intelligent automation" },
     { slug: "inteligencia-artificial", title: "AI applied to cybersecurity" },
+    { slug: "desarrollo-a-la-medida", title: "Web and mobile applications" },
+    { slug: "desarrollo-a-la-medida", title: "System and API integration" },
   ],
 };
 
@@ -133,8 +140,14 @@ export function getNosotrosMenuColumns(locale = "es") {
       heading: t.company,
       items: [
         { title: t.whoWeAre, href: localizedHref(locale, "/nosotros") },
-        { title: t.ourStory, href: localizedHref(locale, "/nosotros#historia") },
-        { title: t.missionVision, href: localizedHref(locale, "/nosotros#mision-vision") },
+        {
+          title: t.ourStory,
+          href: localizedHref(locale, "/nosotros#historia"),
+        },
+        {
+          title: t.missionVision,
+          href: localizedHref(locale, "/nosotros#mision-vision"),
+        },
       ],
     },
     {

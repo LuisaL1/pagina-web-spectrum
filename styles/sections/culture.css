@@ -1,38 +1,114 @@
 /*
   sections/culture.css
-  Estilos exclusivos de components/sections/Culture.
+  Estilos exclusivos de components/sections/Culture (fondo claro).
 */
 
 .culture-values {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
 }
 
 .culture-value {
-  background: var(--color-graphite);
-  padding: 28px 22px;
-  border-radius: var(--radius-md);
+  position: relative;
+  overflow: hidden;
+  padding: 32px 22px 28px;
+  border-radius: 22px;
+  background: var(--color-white);
+  border: 1px solid rgba(2, 2, 2, 0.07);
+  box-shadow: 0 20px 36px -26px rgba(2, 2, 2, 0.4);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.culture-value::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 0;
+  height: 4px;
+  border-radius: 4px 4px 0 0;
+  background: var(--color-red);
+  transform: scaleX(0.2);
+  transform-origin: left;
+  transition: transform 0.35s ease;
+}
+
+.culture-value:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 44px -24px rgba(250, 0, 1, 0.3);
+}
+
+.culture-value:hover::after {
+  transform: scaleX(1);
+}
+
+.culture-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  background: rgba(250, 0, 1, 0.08);
+  color: var(--color-red);
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
+}
+
+.culture-value:hover .culture-icon {
+  background: var(--color-red);
+  color: var(--color-white);
 }
 
 .culture-value h3 {
-  font-size: 16px;
   margin-bottom: 10px;
+  font-size: 16px;
+  color: var(--color-black);
 }
 
 .culture-value p {
   font-size: 13.5px;
-  color: var(--color-gray-500);
+  line-height: 1.6;
+  color: var(--color-gray-700);
   text-transform: none;
   font-weight: var(--fw-regular);
 }
 
+/* Banner: rojo de marca con marcas graficas */
 .culture-banner {
-  background: var(--color-graphite);
+  position: relative;
+  overflow: hidden;
   text-align: center;
+  color: var(--color-white);
+  background:
+    radial-gradient(
+      620px 380px at 88% 0%,
+      rgba(255, 255, 255, 0.16),
+      transparent 70%
+    ),
+    linear-gradient(135deg, #fa0001 0%, #c40001 100%);
+}
+
+.culture-banner .wrap {
+  position: relative;
+}
+
+.culture-quote-mark {
+  display: block;
+  margin-bottom: -28px;
+  font-size: 140px;
+  font-weight: var(--fw-bold);
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.22);
 }
 
 .culture-banner p {
+  position: relative;
   max-width: 780px;
   margin: 0 auto;
   font-size: 30px;
@@ -44,5 +120,17 @@
 }
 
 .culture-banner p span {
-  color: var(--color-red);
+  color: var(--color-white);
+  text-decoration: underline;
+  text-decoration-thickness: 4px;
+  text-underline-offset: 8px;
+  text-decoration-color: rgba(2, 2, 2, 0.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .culture-value,
+  .culture-value::after,
+  .culture-icon {
+    transition: none;
+  }
 }
