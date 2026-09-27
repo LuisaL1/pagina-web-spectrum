@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { ArrowRightIcon, CheckIcon } from "@/components/icons";
-
-const WHATSAPP_NUMBER = "573124650754";
+import { whatsappUrl } from "@/lib/contact";
 
 const content = {
   es: {
@@ -77,7 +76,7 @@ export default function CtaStrip({ locale = "es" }) {
             <p>{t.lead}</p>
           </div>
           <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            href={whatsappUrl()}
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn-primary cta-strip-btn"

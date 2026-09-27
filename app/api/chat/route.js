@@ -67,10 +67,14 @@ export async function POST(request) {
     Response.json({
       reply: advice.reply,
       suggestions: advice.suggestions,
+      cta: advice.cta,
       source,
     });
 
   if (advice.blocked) return local("guard");
+
+  // Quiere hablar con una persona: respuesta directa con boton de WhatsApp.
+  if (advice.intent === "contact") return local("local-contact");
 
   // 2. Sin llave: el asesor local responde solo.
   const apiKey = process.env.GEMINI_API_KEY;

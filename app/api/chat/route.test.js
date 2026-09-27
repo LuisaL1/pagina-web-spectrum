@@ -236,4 +236,15 @@ describe("/api/chat", () => {
     expect(res.reply).toMatch(/Ciberseguridad/);
     vi.unstubAllGlobals();
   });
+
+  it("'quiero hablar con un asesor' responde con WhatsApp sin llamar a Gemini", async () => {
+    process.env.GEMINI_API_KEY = "test-key";
+    const fetchMock = vi.fn();
+    vi.stubGlobal("fetch", fetchMock);
+    const data = await (await post(say("quiero hablar con un asesor"))).json();
+    expect(data.source).toBe("local-contact");
+    expect(data.cta.href).toMatch(/wa\.me\/573124650754/);
+    expect(fetchMock).not.toHaveBeenCalled();
+    vi.unstubAllGlobals();
+  });
 });

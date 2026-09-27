@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { CloseIcon, SendIcon } from "../icons";
+import { CloseIcon, SendIcon, WhatsAppIcon } from "../icons";
 
 const MASCOT = "/logos/spectria-mascota.png";
 
@@ -123,6 +123,7 @@ export default function ChatWidget({ locale = "es" }) {
         {
           role: "assistant",
           content: data.reply || t.noInfo,
+          cta: data.cta || null,
         },
       ]);
     } catch {
@@ -173,7 +174,20 @@ export default function ChatWidget({ locale = "es" }) {
                   <span className="chat-avatar">
                     <Mascot size={index === 0 ? 132 : 40} />
                   </span>
-                  <div className="chat-bubble assistant">{msg.content}</div>
+                  <div className="chat-bubble-col">
+                    <div className="chat-bubble assistant">{msg.content}</div>
+                    {msg.cta && (
+                      <a
+                        className="chat-cta"
+                        href={msg.cta.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <WhatsAppIcon size={16} />
+                        {msg.cta.label}
+                      </a>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div key={index} className="chat-bubble user">

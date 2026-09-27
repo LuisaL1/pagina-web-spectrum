@@ -93,25 +93,56 @@
   line-height: 1;
 }
 
-/* Anillo suave que invita a abrir el chat */
+/* Anillo suave que invita a abrir el chat: queda detras de la mascota y el texto */
 .chat-toggle::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 0;
   border-radius: inherit;
-  border: 2px solid rgba(250, 0, 1, 0.55);
-  animation: chat-pulse 2.6s ease-out infinite;
+  border: 2px solid rgba(250, 0, 1, 0.65);
+  animation: chat-pulse 3s ease-out infinite;
   pointer-events: none;
+}
+
+.chat-toggle > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Movimiento sutil de la mascota: reposa la mayor parte del tiempo y cada
+   ~14 s hace un balanceo muy leve: llama la atencion sin insistir */
+.chat-toggle-icon .chat-mascot {
+  transform-origin: 50% 90%;
+  animation: chat-mascot-wave 14s ease-in-out 5s infinite;
+}
+
+.chat-toggle:hover .chat-toggle-icon .chat-mascot {
+  animation: none;
+}
+
+@keyframes chat-mascot-wave {
+  0%,
+  86%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  90% {
+    transform: translateY(-2px) rotate(-3deg);
+  }
+  95% {
+    transform: translateY(0) rotate(2deg);
+  }
 }
 
 @keyframes chat-pulse {
   0% {
     transform: scale(1);
-    opacity: 0.8;
+    opacity: 0.85;
   }
-  70%,
+  60%,
   100% {
-    transform: scale(1.22, 1.5);
+    transform: scale(1.08, 1.22);
     opacity: 0;
   }
 }
@@ -120,6 +151,10 @@
   .chat-toggle::after {
     animation: none;
     display: none;
+  }
+
+  .chat-toggle-icon .chat-mascot {
+    animation: none;
   }
 }
 
@@ -437,4 +472,40 @@
   max-width: 190px;
   border-bottom-left-radius: 14px;
   border-top-left-radius: 4px;
+}
+
+.chat-bubble-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  min-width: 0;
+}
+
+.chat-bubble-col .chat-bubble.assistant {
+  max-width: none;
+}
+
+/* Boton de accion dentro del chat (WhatsApp con el mensaje ya redactado) */
+.chat-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: #25d366;
+  color: #062b14;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 8px 18px -8px rgba(37, 211, 102, 0.7);
+  transition:
+    transform var(--transition-base),
+    filter var(--transition-base);
+}
+
+.chat-cta:hover,
+.chat-cta:focus-visible {
+  filter: brightness(1.08);
+  transform: translateY(-2px);
 }
