@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CaretIcon } from "../icons";
+import { CaretIcon, HeadsetIcon } from "../icons";
 import {
   getSolutionsMenuColumns,
   getNosotrosMenuColumns,
@@ -20,6 +20,7 @@ const content = {
     blog: "Blog",
     contacto: "Contacto",
     servicios: "Servicios",
+    soporte: "Soporte",
     helpDesk: "Mesa de ayuda",
     openMenu: "Abrir menu",
     closeMenu: "Cerrar menu",
@@ -32,6 +33,7 @@ const content = {
     blog: "Blog",
     contacto: "Contact",
     servicios: "Services",
+    soporte: "Support",
     helpDesk: "Help desk",
     openMenu: "Open menu",
     closeMenu: "Close menu",
@@ -160,6 +162,16 @@ export default function Header({ locale = "es" }) {
               <a href={locale === "en" ? "/en/#soluciones" : "/#soluciones"}>
                 {t.servicios}
               </a>
+              <button
+                type="button"
+                className="top-bar-support"
+                onClick={() =>
+                  window.dispatchEvent(new Event("spectria:support"))
+                }
+              >
+                <HeadsetIcon size={14} />
+                {t.soporte}
+              </button>
             </div>
           </div>
         </div>

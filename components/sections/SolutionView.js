@@ -13,7 +13,6 @@ const content = {
     backToSolutions: "Volver a soluciones",
     businessUnit: "Unidad de negocio",
     helpDesk: "Mesa de ayuda",
-    download: "Descargar información",
     whatIncludes: "Qué incluye",
     scope: "Alcance de la solución",
     processEyebrow: "Cómo trabajamos",
@@ -46,7 +45,6 @@ const content = {
     backToSolutions: "Back to solutions",
     businessUnit: "Business unit",
     helpDesk: "Help desk",
-    download: "Download information",
     whatIncludes: "What's included",
     scope: "Scope of the solution",
     processEyebrow: "How we work",
@@ -81,7 +79,6 @@ export default function SolutionView({ solution, locale = "es" }) {
   const lang = locale === "en" ? "en" : "es";
   const t = content[lang];
   const Icon = solutionIcons[solution.slug];
-  const hasBrochure = solution.brochure !== false;
   const all = getSolutions(locale);
   const index = all.findIndex((item) => item.slug === solution.slug);
   const related = [1, 2, 3].map((step) => all[(index + step) % all.length]);
@@ -218,16 +215,6 @@ export default function SolutionView({ solution, locale = "es" }) {
                 serviceSlug={solution.slug}
                 locale={locale}
               />
-              {hasBrochure && (
-                <a
-                  className="btn btn-primary"
-                  href={`/recursos/servicios/${solution.slug}.pdf`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {t.download}
-                </a>
-              )}
             </div>
           </div>
         </div>

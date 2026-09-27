@@ -1,6 +1,7 @@
 import { getSolutionBySlug } from "@/data/solutions-data";
 import {
   buildServiceRequestEmail,
+  buildSupportRequestEmail,
   buildLeadNotificationEmail,
 } from "@/lib/email-templates";
 import { validateContactPayload } from "@/lib/validation";
@@ -31,7 +32,7 @@ export async function POST(request) {
   if (limited) {
     return Response.json(
       { error: "Demasiadas solicitudes. Intenta de nuevo en unos minutos." },
-      { status: 429, headers: { "Retry-After": String(retryAfterSeconds) } }
+      { status: 429, headers: { "Retry-After": String(retryAfterSeconds) } },
     );
   }
 
@@ -39,7 +40,7 @@ export async function POST(request) {
   if (!apiKey) {
     return Response.json(
       { error: "El servicio de correo no esta configurado todavia." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -48,11 +49,23 @@ export async function POST(request) {
   const { valid, errors, data } = validateContactPayload(body);
   if (!valid) {
     return Response.json(
-      { error: "Faltan campos obligatorios o tienen un formato invalido.", campos: errors },
-      { status: 400 }
+      {
+        error: "Faltan campos obligatorios o tienen un formato invalido.",
+        campos: errors,
+      },
+      { status: 400 },
     );
   }
-  const { nombre, correo, empresa, mensaje, servicio, servicioSlug, cargo, telefono } = data;
+  const {
+    nombre,
+    correo,
+    empresa,
+    mensaje,
+    servicio,
+    servicioSlug,
+    cargo,
+    telefono,
+  } = data;
 
   const senderEmail = process.env.BREVO_SENDER_EMAIL;
   const senderName = process.env.BREVO_SENDER_NAME || "Spectrum";
@@ -65,7 +78,7 @@ export async function POST(request) {
         error:
           "Falta configurar el correo remitente (BREVO_SENDER_EMAIL) en el servidor.",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -90,18 +103,32 @@ export async function POST(request) {
     const detail = await notificationEmail.text();
     return Response.json(
       { error: "No se pudo enviar la notificación.", detail },
-      { status: 502 }
+      { status: 502 },
     );
   }
 
-  // 2. Correo de confirmación al usuario, con contenido específico del servicio.
+  // 2. Correo de confirmación al usuario.
+  // - Si el slug corresponde a una solución real, va el detalle de esa solución.
+  // - Si es una solicitud de soporte (sin solución asociada), va un correo
+  //   generico que la confirma y recuerda la mesa de ayuda.
   const solution = servicioSlug ? getSolutionBySlug(servicioSlug) : null;
+  let confirmationHtml = null;
+  let confirmationSubject = null;
+
   if (solution) {
+    confirmationSubject = `Gracias por tu interés en ${solution.title}`;
+    confirmationHtml = buildServiceRequestEmail({ solution, nombre });
+  } else if (servicioSlug === "soporte") {
+    confirmationSubject = "Recibimos tu solicitud de soporte - Spectrum";
+    confirmationHtml = buildSupportRequestEmail({ nombre });
+  }
+
+  if (confirmationHtml) {
     const confirmationEmail = await sendEmail(apiKey, {
       sender: { email: senderEmail, name: senderName },
       to: [{ email: correo, name: nombre }],
-      subject: `Gracias por tu interés en ${solution.title}`,
-      htmlContent: buildServiceRequestEmail({ solution, nombre }),
+      subject: confirmationSubject,
+      htmlContent: confirmationHtml,
     });
 
     if (!confirmationEmail.ok) {
@@ -142,21 +169,18 @@ export async function POST(request) {
       console.error("Brevo contact error:", detail);
     } else if (contactResponse.status === 400) {
       // El contacto ya existe: actualizamos sus listas explicitamente.
-      await fetch(
-        `${BREVO_API_URL}/contacts/${encodeURIComponent(correo)}`,
-        {
-          method: "PUT",
-          headers: {
-            "api-key": apiKey,
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-          body: JSON.stringify({
-            attributes: contactPayload.attributes,
-            listIds,
-          }),
-        }
-      );
+      await fetch(`${BREVO_API_URL}/contacts/${encodeURIComponent(correo)}`, {
+        method: "PUT",
+        headers: {
+          "api-key": apiKey,
+          "Content-Type": "application/json",
+          accept: "application/json",
+        },
+        body: JSON.stringify({
+          attributes: contactPayload.attributes,
+          listIds,
+        }),
+      });
     }
   }
 

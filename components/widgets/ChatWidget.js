@@ -2,9 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { CloseIcon, SendIcon, WhatsAppIcon } from "../icons";
+import { CloseIcon, HeadsetIcon, SendIcon, WhatsAppIcon } from "../icons";
+import ContactModal from "./ContactModal";
 
 const MASCOT = "/logos/spectria-mascota.png";
+const HELP_DESK_URL = "https://soporte.spectrumt.co";
 
 function Mascot({ size }) {
   return (
@@ -43,6 +45,11 @@ const content = {
       "No dispongo de información suficiente para responder esa consulta. Te recomiendo contactar directamente con nuestro equipo.",
     connectionError:
       "Tuvimos un problema de conexión. Intenta de nuevo o escribe a soporte@spectrumt.co.",
+    supportMessage:
+      "Si ya tienes un servicio contratado con nosotros, ingresa a la mesa de ayuda con las credenciales que te suministramos. Si aún no tienes una cuenta o necesitas ayuda para empezar, llena el formulario y te contactaremos desde soporte@spectrumt.co.",
+    supportHelpDesk: "Ir a la mesa de ayuda",
+    supportForm: "Llenar formulario",
+    supportServiceName: "Soporte técnico",
   },
   en: {
     greeting:
@@ -67,6 +74,11 @@ const content = {
       "I don't have enough information to answer that question. I'd recommend contacting our team directly.",
     connectionError:
       "We had a connection issue. Please try again or email us at soporte@spectrumt.co.",
+    supportMessage:
+      "If you already have a service with us, sign in to the help desk with the credentials we provided. If you don't have an account yet or need help getting started, fill out the form and we will contact you from soporte@spectrumt.co.",
+    supportHelpDesk: "Go to the help desk",
+    supportForm: "Fill out the form",
+    supportServiceName: "Technical support",
   },
 };
 
@@ -79,6 +91,7 @@ export default function ChatWidget({ locale = "es" }) {
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [suggestions, setSuggestions] = useState(t.starters);
+  const [supportFormOpen, setSupportFormOpen] = useState(false);
   const listRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -87,6 +100,32 @@ export default function ChatWidget({ locale = "es" }) {
     const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
     if (!isTouchDevice) inputRef.current?.focus();
   }, [open]);
+
+  // El icono de audifonos del encabezado (fuera de este componente) abre el
+  // chat directo en el flujo de soporte, sin pasar por Gemini ni el asesor.
+  useEffect(() => {
+    function openSupport() {
+      setOpen(true);
+      setSuggestions([]);
+      setMessages((current) => {
+        const last = current[current.length - 1];
+        if (last?.role === "assistant" && last.actions) return current;
+        return [
+          ...current,
+          {
+            role: "assistant",
+            content: t.supportMessage,
+            actions: [
+              { type: "link", label: t.supportHelpDesk, href: HELP_DESK_URL },
+              { type: "form", label: t.supportForm },
+            ],
+          },
+        ];
+      });
+    }
+    window.addEventListener("spectria:support", openSupport);
+    return () => window.removeEventListener("spectria:support", openSupport);
+  }, [t]);
 
   useEffect(() => {
     if (!listRef.current) return;
@@ -187,6 +226,33 @@ export default function ChatWidget({ locale = "es" }) {
                         {msg.cta.label}
                       </a>
                     )}
+                    {msg.actions && (
+                      <div className="chat-actions">
+                        {msg.actions.map((action) =>
+                          action.type === "form" ? (
+                            <button
+                              key={action.type}
+                              type="button"
+                              className="chat-cta chat-cta--outline"
+                              onClick={() => setSupportFormOpen(true)}
+                            >
+                              {action.label}
+                            </button>
+                          ) : (
+                            <a
+                              key={action.type}
+                              className="chat-cta chat-cta--outline"
+                              href={action.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <HeadsetIcon size={15} />
+                              {action.label}
+                            </a>
+                          ),
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               ) : (
@@ -265,6 +331,14 @@ export default function ChatWidget({ locale = "es" }) {
           </span>
         </button>
       )}
+
+      <ContactModal
+        open={supportFormOpen}
+        onClose={() => setSupportFormOpen(false)}
+        serviceName={t.supportServiceName}
+        serviceSlug="soporte"
+        locale={locale}
+      />
     </div>
   );
 }

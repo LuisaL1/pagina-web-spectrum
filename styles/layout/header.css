@@ -69,6 +69,24 @@ header.main-nav.is-scrolled {
   color: var(--color-red);
 }
 
+.top-bar-support {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  appearance: none;
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.top-bar-support:hover {
+  color: var(--color-red);
+}
+
 @media (max-width: 720px) {
   :root {
     --topbar-height: 0px;

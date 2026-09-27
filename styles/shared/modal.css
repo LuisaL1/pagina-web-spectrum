@@ -12,7 +12,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  z-index: 200;
+  z-index: 350;
   padding: 110px 20px 40px;
   overflow-y: auto;
 }
@@ -48,7 +48,9 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: border-color var(--transition-base), background var(--transition-base);
+  transition:
+    border-color var(--transition-base),
+    background var(--transition-base);
 }
 
 .modal-close:hover {

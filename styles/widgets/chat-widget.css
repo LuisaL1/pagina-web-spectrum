@@ -509,3 +509,25 @@
   filter: brightness(1.08);
   transform: translateY(-2px);
 }
+
+/* Variante para acciones que no son WhatsApp (mesa de ayuda, formulario) */
+.chat-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chat-cta--outline {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: var(--color-white);
+  box-shadow: none;
+  font-size: 12.5px;
+}
+
+.chat-cta--outline:hover,
+.chat-cta--outline:focus-visible {
+  filter: none;
+  border-color: var(--color-white);
+  background: rgba(255, 255, 255, 0.08);
+}
