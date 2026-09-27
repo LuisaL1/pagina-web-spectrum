@@ -6,6 +6,12 @@ import { ChatIcon, CloseIcon, SendIcon } from "../icons";
 const content = {
   es: {
     greeting: "Hola, soy SpectrIA. ¿En qué puedo ayudarte?",
+    starters: [
+      "¿Qué servicios ofrecen?",
+      "Tenemos caídas y lentitud",
+      "¿Cómo protegen a una empresa de ransomware?",
+      "Quiero hablar con un asesor",
+    ],
     dialogLabel: "SpectrIA, asistente de Spectrum",
     close: "Cerrar chat",
     placeholder: "Escribe tu pregunta...",
@@ -18,6 +24,12 @@ const content = {
   },
   en: {
     greeting: "Hi, I'm SpectrIA. How can I help you?",
+    starters: [
+      "What services do you offer?",
+      "We have outages and slowness",
+      "How do you protect a company from ransomware?",
+      "I want to talk to an advisor",
+    ],
     dialogLabel: "SpectrIA, Spectrum's assistant",
     close: "Close chat",
     placeholder: "Type your question...",
@@ -38,6 +50,7 @@ export default function ChatWidget({ locale = "es" }) {
   ]);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
+  const [suggestions, setSuggestions] = useState(t.starters);
   const listRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -52,14 +65,19 @@ export default function ChatWidget({ locale = "es" }) {
     listRef.current.scrollTop = listRef.current.scrollHeight;
   }, [messages, sending, open]);
 
-  async function sendMessage(event) {
+  function sendMessage(event) {
     event.preventDefault();
-    const text = input.trim();
+    submit(input);
+  }
+
+  async function submit(rawText) {
+    const text = rawText.trim();
     if (!text || sending) return;
 
     const nextMessages = [...messages, { role: "user", content: text }];
     setMessages(nextMessages);
     setInput("");
+    setSuggestions([]);
     setSending(true);
 
     try {
@@ -69,6 +87,9 @@ export default function ChatWidget({ locale = "es" }) {
         body: JSON.stringify({ messages: nextMessages, locale }),
       });
       const data = await response.json();
+      setSuggestions(
+        Array.isArray(data.suggestions) ? data.suggestions.slice(0, 4) : [],
+      );
       setMessages((current) => [
         ...current,
         {
@@ -121,6 +142,21 @@ export default function ChatWidget({ locale = "es" }) {
               </div>
             )}
           </div>
+
+          {suggestions.length > 0 && !sending && (
+            <div className="chat-suggestions">
+              {suggestions.map((suggestion) => (
+                <button
+                  key={suggestion}
+                  type="button"
+                  className="chat-suggestion"
+                  onClick={() => submit(suggestion)}
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
+          )}
 
           <form className="chat-input-row" onSubmit={sendMessage}>
             <input
