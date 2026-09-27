@@ -1100,14 +1100,29 @@
   }
 
   .chat-toggle {
-    width: 52px;
-    height: 52px;
+    width: 56px;
+    height: 56px;
     padding: 0;
     justify-content: center;
   }
 
+  .chat-toggle-icon {
+    width: 66px;
+    height: 66px;
+    margin: -16px 0 0;
+  }
+
   .chat-toggle-label {
     display: none;
+  }
+
+  .chat-toggle-ai {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    padding: 3px 6px;
+    font-size: 9.5px;
+    box-shadow: 0 4px 10px rgba(2, 2, 2, 0.35);
   }
 
   .chat-panel {

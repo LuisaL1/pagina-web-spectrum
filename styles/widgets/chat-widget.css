@@ -32,6 +32,97 @@
     transform var(--transition-base);
 }
 
+.chat-toggle {
+  position: relative;
+}
+
+/* El muneco "sale" del boton por arriba: grande, sin circulo */
+.chat-toggle-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 70px;
+  height: 70px;
+  margin: -24px 0 -8px -8px;
+  filter: drop-shadow(0 8px 8px rgba(2, 2, 2, 0.4));
+  transition: transform 0.25s ease;
+}
+
+.chat-toggle-icon {
+  position: relative;
+}
+
+/* Halo claro detras del muneco: lo separa del rojo del boton */
+.chat-toggle-icon::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.55),
+    rgba(255, 255, 255, 0) 70%
+  );
+}
+
+.chat-toggle-icon .chat-mascot {
+  position: relative;
+}
+
+.chat-toggle:hover .chat-toggle-icon {
+  transform: translateY(-3px) rotate(-6deg);
+}
+
+.chat-mascot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Insignia "IA": deja claro que es un asistente de inteligencia artificial */
+.chat-toggle-ai {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--color-white);
+  color: var(--color-red);
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+/* Anillo suave que invita a abrir el chat */
+.chat-toggle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 2px solid rgba(250, 0, 1, 0.55);
+  animation: chat-pulse 2.6s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes chat-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  70%,
+  100% {
+    transform: scale(1.22, 1.5);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-toggle::after {
+    animation: none;
+    display: none;
+  }
+}
+
 .chat-toggle:hover {
   background: var(--color-red-hover);
   transform: translateY(-2px);
@@ -261,4 +352,89 @@
   border-color: var(--color-red);
   background: rgba(250, 0, 1, 0.14);
   color: var(--color-white);
+}
+
+.chat-panel-title strong {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chat-ai-badge {
+  display: inline-block !important;
+  margin: 0 !important;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: var(--color-red);
+  color: var(--color-white) !important;
+  font-size: 10px !important;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1;
+}
+
+.chat-disclaimer {
+  margin: 0;
+  padding: 0 20px 10px;
+  font-size: 10.5px;
+  line-height: 1.4;
+  text-transform: none;
+  font-weight: var(--fw-regular);
+  color: var(--color-gray-500);
+}
+
+/* SpectrIA: el muneco se ve completo, sin circulo, junto al mensaje (no dentro de la burbuja) */
+.chat-panel-header {
+  align-items: center;
+  gap: 12px;
+}
+
+.chat-panel-title {
+  flex: 1;
+}
+
+.chat-header-avatar {
+  display: flex;
+  flex: none;
+  width: 48px;
+  height: 48px;
+}
+
+.chat-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  align-self: flex-start;
+  max-width: 100%;
+}
+
+.chat-row .chat-bubble.assistant {
+  max-width: none;
+}
+
+.chat-avatar {
+  display: flex;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.35));
+}
+
+/* Saludo inicial: muneco grande al lado del mensaje */
+.chat-row--hero {
+  align-items: center;
+  gap: 4px;
+  margin: 4px 0 8px;
+}
+
+.chat-row--hero .chat-avatar {
+  width: 132px;
+  height: 132px;
+  filter: drop-shadow(0 12px 14px rgba(0, 0, 0, 0.4));
+}
+
+.chat-row--hero .chat-bubble.assistant {
+  max-width: 190px;
+  border-bottom-left-radius: 14px;
+  border-top-left-radius: 4px;
 }
