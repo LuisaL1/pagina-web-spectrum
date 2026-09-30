@@ -7,7 +7,7 @@ import { localizedHref } from "@/lib/i18n";
 const content = {
   es: {
     imageAlt:
-      "Cabeza con chip de inteligencia artificial rodeada de automatización, análisis, rapidez y seguridad",
+      "Ciudad inteligente conectada por una red de datos, que representa automatización, análisis, rapidez y seguridad",
     heading: "Transforma tus ideas en soluciones",
     headingEm: "inteligentes",
     lead: "Ofrecemos soluciones de inteligencia artificial diseñadas para ayudarte a crecer, optimizar procesos y tomar decisiones más inteligentes. Nuestra tecnología combina machine learning, análisis predictivo y automatización para convertir datos en resultados reales.",
@@ -16,7 +16,7 @@ const content = {
   },
   en: {
     imageAlt:
-      "Head with an artificial intelligence chip surrounded by automation, analysis, speed and security",
+      "Smart city connected by a data network, representing automation, analysis, speed and security",
     heading: "Turn your ideas into",
     headingEm: "intelligent",
     lead: "We offer artificial intelligence solutions designed to help you grow, optimize processes and make smarter decisions. Our technology combines machine learning, predictive analytics and automation to turn data into real results.",
@@ -25,13 +25,14 @@ const content = {
   },
 };
 
-// Posicion (% del ancho/alto de AI-imagen.png, 1920x1080) del centro de cada
-// circulo del dibujo. Si se reemplaza la imagen hay que recalcularlas.
+// Posicion (% del ancho/alto de ai-sociedad-inteligente.png, 1488x1057) del
+// centro de cada punto rojo del dibujo. Si se reemplaza la imagen hay que
+// recalcularlas.
 const hotspots = [
   {
     id: "automation",
-    x: 49.64,
-    y: 14.26,
+    x: 60.3,
+    y: 15,
     place: "below",
     es: {
       title: "Automatización",
@@ -44,8 +45,8 @@ const hotspots = [
   },
   {
     id: "analytics",
-    x: 29.58,
-    y: 46.11,
+    x: 35.2,
+    y: 39,
     place: "below",
     es: {
       title: "Análisis",
@@ -58,8 +59,8 @@ const hotspots = [
   },
   {
     id: "speed",
-    x: 70.42,
-    y: 46.11,
+    x: 78,
+    y: 15.5,
     place: "below",
     es: {
       title: "Rapidez",
@@ -72,8 +73,8 @@ const hotspots = [
   },
   {
     id: "security",
-    x: 50.47,
-    y: 85.74,
+    x: 55,
+    y: 68,
     place: "above",
     es: {
       title: "Seguridad",
@@ -95,7 +96,7 @@ export default function AISpotlight({ locale = "es" }) {
       <div className="ai-spotlight-robot-wrap">
         <div className="ai-illustration">
           <Image
-            src="/fondos/AI-imagen.png"
+            src="/fondos/ai-sociedad-inteligente.png"
             alt={t.imageAlt}
             fill
             sizes="100vw"

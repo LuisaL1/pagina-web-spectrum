@@ -1,12 +1,9 @@
-import { Suspense } from "react";
 import Header from "@/components/layout/Header";
 import Hero from "@/components/sections/Hero";
 import AISpotlight from "@/components/sections/AISpotlight";
 import UnitNav from "@/components/sections/UnitNav";
 import QualityStrip from "@/components/sections/QualityStrip";
 import Solutions from "@/components/sections/Solutions";
-import Cases from "@/components/sections/Cases";
-import CasesWithSector from "@/components/sections/CasesWithSector";
 import Partners from "@/components/sections/Partners";
 import Blog from "@/components/sections/Blog";
 import CtaStrip from "@/components/sections/CtaStrip";
@@ -35,9 +32,6 @@ export default function HomeEn() {
         <QualityStrip locale="en" />
         <Solutions locale="en" />
         <Partners locale="en" />
-        <Suspense fallback={<Cases locale="en" />}>
-          <CasesWithSector locale="en" />
-        </Suspense>
         <Blog locale="en" />
         <CtaStrip locale="en" />
       </main>

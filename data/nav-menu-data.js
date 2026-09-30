@@ -97,9 +97,12 @@ export function getSolutionsMenuColumns(locale = "es") {
       items: [
         ...sectores.map(({ title, slug }) => ({
           title,
-          href: localizedHref(locale, `/?sector=${slug}#casos`),
+          href: localizedHref(locale, `/nosotros?sector=${slug}#casos`),
         })),
-        { title: t.viewAllClients, href: localizedHref(locale, "/#casos") },
+        {
+          title: t.viewAllClients,
+          href: localizedHref(locale, "/nosotros#casos"),
+        },
       ],
     },
   ];
@@ -160,7 +163,7 @@ export function getNosotrosMenuColumns(locale = "es") {
     {
       heading: t.results,
       items: [
-        { title: t.topClients, href: localizedHref(locale, "/#casos") },
+        { title: t.topClients, href: localizedHref(locale, "/nosotros#casos") },
         { title: t.partners, href: localizedHref(locale, "/#aliados") },
         { title: t.certifications, href: localizedHref(locale, "/novedades") },
       ],

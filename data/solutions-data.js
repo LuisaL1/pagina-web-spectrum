@@ -9,7 +9,7 @@ export const solutions = [
     intro:
       "Diseñamos, implementamos y operamos la infraestructura tecnológica que sostiene su negocio: servidores, almacenamiento, redes y nube, integrados en una arquitectura de alta disponibilidad y lista para escalar.",
     tags: ["Hiperconvergencia", "NOC", "Nube"],
-    bg: "/fondos/fondo-infra.jpg",
+    bg: "/fondos/fondo-infra.png",
     overview:
       "Diseñamos arquitecturas de infraestructura a la medida de cada organización, combinando disponibilidad, seguridad y eficiencia operativa en entornos on-premise, híbridos o en la nube.",
     highlights: ["Alta disponibilidad", "Escalabilidad", "Migración a la nube", "Soporte 24/7"],
@@ -67,7 +67,7 @@ export const solutions = [
     intro:
       "Blindamos plataformas, aplicaciones y redes frente a amenazas digitales con un enfoque de monitoreo constante, análisis de vulnerabilidades y respuesta a incidentes.",
     tags: ["SOC", "Hacking ético", "Apps & API"],
-    bg: "/fondos/fondo-ciber.jpg",
+    bg: "/fondos/fondo-ciber.png",
     overview:
       "Combinamos monitoreo permanente, pruebas de seguridad y cumplimiento normativo para reducir el riesgo digital y proteger la continuidad de su negocio.",
     highlights: ["SOC 24/7", "Pentesting", "Cumplimiento normativo", "Respuesta a incidentes"],
@@ -135,7 +135,7 @@ export const solutions = [
     intro:
       "Diseñamos redes cableadas, inalámbricas y SD-WAN que garantizan una comunicación cifrada de extremo a extremo entre todas sus sedes y usuarios.",
     tags: ["SD-WAN", "LAN/WAN", "Data Center"],
-    bg: "/fondos/fondo-conec.jpg",
+    bg: "/fondos/fondo-conec.png",
     overview:
       "Conectamos sus sedes y usuarios con redes estables, rápidas y seguras, diseñadas para soportar operaciones críticas y escalar junto con su organización.",
     highlights: ["Enlaces dedicados", "Redes WAN/LAN", "SD-WAN", "Disponibilidad garantizada"],
@@ -203,7 +203,7 @@ export const solutions = [
     intro:
       "Consultoría, leasing tecnológico, mesa de ayuda y mantenimiento para que su equipo se enfoque en crecer, mientras nosotros nos encargamos de que la tecnología funcione.",
     tags: ["Leasing", "Soporte", "Consultoria"],
-    bg: "/fondos/fondo-ti.jpg",
+    bg: "/fondos/fondo-ti.png",
     brochure: false,
     overview:
       "Consultoría, leasing tecnológico, mesa de ayuda y mantenimiento en un solo frente, para que su equipo se enfoque en crecer mientras la tecnología funciona.",
@@ -252,7 +252,7 @@ export const solutions = [
     intro:
       "Soluciones de inteligencia artificial aplicada que automatizan procesos, anticipan riesgos y potencian la toma de decisiones de su organización.",
     tags: ["Automatización", "Analítica predictiva", "IA aplicada"],
-    bg: "/fondos/fondo-ia.jpg",
+    bg: "/fondos/fondo-ia.png",
     overview:
       "Diseñamos e implementamos soluciones de inteligencia artificial adaptadas a su negocio, desde la automatización de procesos hasta asistentes virtuales corporativos.",
     highlights: ["Automatización", "Analítica avanzada", "IA generativa", "Integración a medida"],
@@ -321,7 +321,7 @@ export const solutions = [
     intro:
       "Diseñamos, desarrollamos y mantenemos software a la medida: aplicaciones web y móviles, integraciones entre sistemas y automatizaciones que se ajustan a los procesos de su organización, con seguridad desde el diseño.",
     tags: ["Aplicaciones", "Integraciones", "Mantenimiento"],
-    bg: "/fondos/fondo-desarrollo.jpg",
+    bg: "/fondos/fondo-desarrollo.png",
     brochure: false,
     overview:
       "Diseñamos, desarrollamos y mantenemos software a la medida de sus procesos: aplicaciones, integraciones y automatizaciones, con seguridad desde el diseño.",
@@ -373,7 +373,7 @@ export const solutionsEn = [
     intro:
       "We design, implement and operate the technology infrastructure that supports your business: servers, storage, networks and cloud, integrated into a highly available architecture ready to scale.",
     tags: ["Hyperconvergence", "NOC", "Cloud"],
-    bg: "/fondos/fondo-infra.jpg",
+    bg: "/fondos/fondo-infra.png",
     overview:
       "We design infrastructure architectures tailored to each organization, combining availability, security and operational efficiency in on-premise, hybrid or cloud environments.",
     highlights: ["High availability", "Scalability", "Cloud migration", "24/7 support"],
@@ -431,7 +431,7 @@ export const solutionsEn = [
     intro:
       "We shield platforms, applications and networks against digital threats with a focus on constant monitoring, vulnerability analysis and incident response.",
     tags: ["SOC", "Ethical hacking", "Apps & API"],
-    bg: "/fondos/fondo-ciber.jpg",
+    bg: "/fondos/fondo-ciber.png",
     overview:
       "We combine permanent monitoring, security testing and regulatory compliance to reduce digital risk and protect your business continuity.",
     highlights: ["24/7 SOC", "Pentesting", "Regulatory compliance", "Incident response"],
@@ -500,7 +500,7 @@ export const solutionsEn = [
     intro:
       "We design wired, wireless and SD-WAN networks that guarantee end-to-end encrypted communication across all your sites and users.",
     tags: ["SD-WAN", "LAN/WAN", "Data Center"],
-    bg: "/fondos/fondo-conec.jpg",
+    bg: "/fondos/fondo-conec.png",
     overview:
       "We connect your sites and users with stable, fast and secure networks, designed to support critical operations and scale along with your organization.",
     highlights: ["Dedicated links", "WAN/LAN networks", "SD-WAN", "Guaranteed availability"],
@@ -568,7 +568,7 @@ export const solutionsEn = [
     intro:
       "Consulting, technology leasing, help desk and maintenance so your team can focus on growing, while we make sure the technology works.",
     tags: ["Leasing", "Support", "Consulting"],
-    bg: "/fondos/fondo-ti.jpg",
+    bg: "/fondos/fondo-ti.png",
     brochure: false,
     overview:
       "Consulting, technology leasing, help desk and maintenance in a single front, so your team can focus on growing while the technology works.",
@@ -617,7 +617,7 @@ export const solutionsEn = [
     intro:
       "Applied artificial intelligence solutions that automate processes, anticipate risks and power your organization's decision-making.",
     tags: ["Automation", "Predictive analytics", "Applied AI"],
-    bg: "/fondos/fondo-ia.jpg",
+    bg: "/fondos/fondo-ia.png",
     overview:
       "We design and implement artificial intelligence solutions tailored to your business, from process automation to corporate virtual assistants.",
     highlights: ["Automation", "Advanced analytics", "Generative AI", "Custom integration"],
@@ -685,7 +685,7 @@ export const solutionsEn = [
     intro:
       "We design, build and maintain custom software: web and mobile applications, system integrations and automations tailored to your organization's processes, with security built in from the start.",
     tags: ["Applications", "Integrations", "Maintenance"],
-    bg: "/fondos/fondo-desarrollo.jpg",
+    bg: "/fondos/fondo-desarrollo.png",
     brochure: false,
     overview:
       "We design, build and maintain software tailored to your processes: applications, integrations and automations, with security by design.",

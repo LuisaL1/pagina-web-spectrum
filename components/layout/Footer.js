@@ -7,7 +7,7 @@ const footerColumnsEs = [
     title: "Empresa",
     links: [
       { label: "Nosotros", href: "/nosotros" },
-      { label: "Casos de exito", href: "#casos" },
+      { label: "Casos de exito", href: "/nosotros#casos" },
       { label: "Blog", href: "#blog" },
       { label: "Trabaja con nosotros", href: "#" },
     ],
@@ -45,7 +45,7 @@ const footerColumnsEn = [
     title: "Company",
     links: [
       { label: "About us", href: "/nosotros" },
-      { label: "Success stories", href: "#casos" },
+      { label: "Success stories", href: "/en/nosotros#casos" },
       { label: "Blog", href: "#blog" },
       { label: "Work with us", href: "#" },
     ],

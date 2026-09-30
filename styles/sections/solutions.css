@@ -228,12 +228,13 @@
   cursor: pointer;
   transition:
     background var(--transition-base),
-    transform var(--transition-base);
+    width var(--transition-base);
 }
 
 .units-carousel-dot.active {
   background: var(--color-red);
-  transform: scale(1.3);
+  width: 24px;
+  border-radius: 4px;
 }
 
 /* Flechas en los extremos del track (el contenedor de controles no es

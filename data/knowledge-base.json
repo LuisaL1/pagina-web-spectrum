@@ -123,16 +123,41 @@
     }
   ],
   "aliados_tecnologicos": [
-    "Adobe", "Aranda Software", "Aruba (HPE)", "Check Point", "Pentera", "AWS",
-    "CrowdStrike", "ExaGrid", "Extreme Networks", "KELA", "Fortinet",
-    "Google Cloud", "Hitachi", "HP", "IBM", "Lenovo", "Microsoft", "Nutanix",
-    "TrendAI (Trend Micro)", "Veeam", "SentinelOne", "Broadcom", "Zoho"
+    "Adobe",
+    "Aranda Software",
+    "Aruba (HPE)",
+    "Check Point",
+    "Pentera",
+    "AWS",
+    "CrowdStrike",
+    "ExaGrid",
+    "Extreme Networks",
+    "KELA",
+    "Fortinet",
+    "Google Cloud",
+    "Hitachi",
+    "HP",
+    "IBM",
+    "Lenovo",
+    "Microsoft",
+    "Nutanix",
+    "TrendAI (Trend Micro)",
+    "Veeam",
+    "SentinelOne",
+    "Broadcom",
+    "Zoho"
   ],
   "equipo_directivo": [
     { "nombre": "Cristian Valencia", "cargo": "Chief Executive Officer" },
     { "nombre": "Edison Hernandez", "cargo": "Chief Commercial Officer" },
-    { "nombre": "Sneyder Martinez", "cargo": "Project and Operations Engineering Manager" },
-    { "nombre": "Paola Molano", "cargo": "Legal Advisor and Procurement Specialist" }
+    {
+      "nombre": "Sneyder Martinez",
+      "cargo": "Project and Operations Engineering Manager"
+    },
+    {
+      "nombre": "Paola Molano",
+      "cargo": "Legal Advisor and Procurement Specialist"
+    }
   ],
   "casos_de_exito": [
     {

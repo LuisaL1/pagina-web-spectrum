@@ -253,7 +253,9 @@ export default function Header({ locale = "es" }) {
               <li className="nav-item" key="casos">
                 <Link
                   className="top-link"
-                  href={locale === "en" ? "/en/#casos" : "/#casos"}
+                  href={
+                    locale === "en" ? "/en/nosotros#casos" : "/nosotros#casos"
+                  }
                   aria-current={activeId === "casos" ? "true" : undefined}
                   onClick={closeMenu}
                 >

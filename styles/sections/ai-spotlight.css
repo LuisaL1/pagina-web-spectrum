@@ -6,38 +6,11 @@
 .ai-spotlight {
   position: relative;
   overflow: hidden;
-  background: var(--color-gray-300);
+  background: #eff0f4;
   color: var(--color-black);
   min-height: 620px;
   display: flex;
   align-items: center;
-}
-
-/* Manchas de color difuminadas para dar profundidad al fondo gris: halo rojo
-   tras la ilustracion, rojo tenue abajo a la izquierda y una luz blanca
-   arriba a la izquierda. */
-.ai-spotlight::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      640px 560px at 76% 42%,
-      rgba(255, 13, 13, 0.2),
-      transparent 70%
-    ),
-    radial-gradient(
-      520px 420px at 8% 96%,
-      rgba(255, 13, 13, 0.11),
-      transparent 70%
-    ),
-    radial-gradient(
-      600px 460px at 18% 8%,
-      rgba(255, 255, 255, 0.55),
-      transparent 70%
-    );
 }
 
 .ai-spotlight-robot-wrap {
@@ -45,9 +18,12 @@
   top: 0;
   right: 0;
   bottom: 0;
-  left: 50%;
+  left: 40%;
   z-index: 0;
-  container-type: size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
   pointer-events: none;
 }
 
@@ -57,18 +33,30 @@
   z-index: 3;
 }
 
-/* Caja con la proporcion exacta de AI-imagen.png (16:9): asi los puntos
-   interactivos, posicionados en %, caen sobre cada circulo. Se agranda
-   porque el dibujo ocupa solo ~55% del ancho del archivo, sin salirse del
-   alto disponible. */
+/* Caja con la proporcion exacta de ai-sociedad-inteligente.png (1488x1057):
+   asi los puntos interactivos, posicionados en %, caen sobre cada punto
+   rojo del dibujo. Se desvanece en los bordes izquierdo y derecho para que
+   se integre como fondo, sin verse como una imagen recortada y pegada. */
 .ai-illustration {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  aspect-ratio: 16 / 9;
-  width: 125%;
-  width: min(125cqw, 135cqh);
-  transform: translate(-50%, calc(-50% - 40px));
+  position: relative;
+  width: 138%;
+  max-height: 138%;
+  aspect-ratio: 1488 / 1057;
+  flex-shrink: 0;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 16%,
+    #000 92%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 16%,
+    #000 92%,
+    transparent 100%
+  );
 }
 
 .ai-spotlight-robot {
@@ -78,7 +66,7 @@
 /* Circulos interactivos */
 .ai-hotspot {
   position: absolute;
-  width: 13.34%;
+  width: 6%;
   aspect-ratio: 1;
   transform: translate(-50%, -50%);
   pointer-events: auto;
@@ -173,19 +161,6 @@
   }
 }
 
-/* Resplandor claro detras del dibujo para separarlo del fondo gris. */
-.ai-spotlight-robot-wrap::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(255, 255, 255, 0.7) 0%,
-    rgba(255, 255, 255, 0) 58%
-  );
-}
-
 .ai-spotlight-inner {
   position: relative;
   z-index: 1;
@@ -223,7 +198,6 @@
 .ai-wordmark span {
   font-size: 160px;
   line-height: 0.8;
-  filter: drop-shadow(0 8px 20px rgba(255, 13, 13, 0.3));
 }
 
 .ai-spotlight h2 {

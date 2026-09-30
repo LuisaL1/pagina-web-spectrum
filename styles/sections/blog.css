@@ -40,6 +40,15 @@
     );
 }
 
+/* Solo en el inicio: textura de circuitos muy suave, sin las manchas rojas. */
+#blog::before {
+  background: url("/fondos/textura-circuitos.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.7;
+}
+
 #blog .wrap,
 .blog-archive .wrap {
   position: relative;
