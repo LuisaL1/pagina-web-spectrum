@@ -139,34 +139,47 @@
     align-items: stretch;
   }
 
-  .ai-spotlight::before {
-    background:
-      radial-gradient(
-        420px 320px at 50% 9%,
-        rgba(255, 13, 13, 0.2),
-        transparent 70%
-      ),
-      radial-gradient(
-        420px 360px at 92% 90%,
-        rgba(255, 13, 13, 0.1),
-        transparent 70%
-      ),
-      radial-gradient(
-        480px 360px at 8% 45%,
-        rgba(255, 255, 255, 0.5),
-        transparent 70%
-      );
-  }
-
   .ai-spotlight-robot-wrap {
     position: relative;
     inset: auto;
-    height: 280px;
+    height: 200px;
+    padding: 0;
   }
 
   .ai-illustration {
-    width: min(112cqw, 135cqh);
-    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+    /* En movil la imagen llena el ancho completo (sin margen a los lados
+       para desvanecer), asi que aqui se desvanece arriba y abajo en su
+       lugar, contra el fondo de la seccion. */
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      transparent 0%,
+      #000 22%,
+      #000 78%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      180deg,
+      transparent 0%,
+      #000 22%,
+      #000 78%,
+      transparent 100%
+    );
+  }
+
+  /* En movil no hay hover: se recorta la imagen para llenar el espacio con
+     la parte mas interesante (la ciudad), en vez de mostrarla completa con
+     margenes en blanco. Los puntos interactivos dependen de coordenadas
+     calculadas para la imagen completa, asi que se ocultan aqui. */
+  .ai-spotlight-robot {
+    object-fit: cover;
+    object-position: 68% 55%;
+  }
+
+  .ai-hotspot {
+    display: none;
   }
 
   .ai-hotspot-tip {

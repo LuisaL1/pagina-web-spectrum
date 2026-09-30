@@ -3,7 +3,6 @@ import Image from "next/image";
 import { getNews } from "@/data/news";
 import { ArrowRightIcon } from "../icons";
 import { localizedHref } from "@/lib/i18n";
-import BackLink from "../widgets/BackLink";
 
 const content = {
   es: {
@@ -32,10 +31,10 @@ export default function Novedades({ locale = "es" }) {
   return (
     <section className="blog-archive pattern-bg-after" id="novedades">
       <div className="wrap">
-        <BackLink className="page-back" href={localizedHref(locale, "/")}>
+        <Link className="page-back" href={localizedHref(locale, "/#blog")}>
           <ArrowRightIcon size={14} className="page-back-icon" />
           {t.backHome}
-        </BackLink>
+        </Link>
         <div className="section-head">
           <p className="eyebrow">{t.eyebrow}</p>
           <h2>{t.heading}</h2>
