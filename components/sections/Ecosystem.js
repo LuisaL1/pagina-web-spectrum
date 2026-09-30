@@ -194,7 +194,7 @@ export default function Ecosystem({ locale = "es" }) {
             <span className="about-hero-dots" aria-hidden="true" />
             <div className="about-hero-media">
               <Image
-                src="/fondos/fondo-infra.jpg"
+                src="/fondos/fondo-infra.png"
                 alt={t.imageAlt}
                 fill
                 sizes="(max-width: 980px) 100vw, 520px"

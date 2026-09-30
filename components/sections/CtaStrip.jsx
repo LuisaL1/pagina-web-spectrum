@@ -14,7 +14,7 @@ const content = {
       "Operación segura, eficiente y disponible 24/7.",
     ],
     imageAlt:
-      "Manos de un especialista trabajando en un portátil con código en pantalla",
+      "Equipo de especialistas monitoreando operaciones de tecnología en pantallas de un centro de operaciones",
     heading: "¿Listo para transformar tu organización?",
     lead: "Conversemos sobre cómo podemos ayudarte a alcanzar tus objetivos tecnológicos.",
     cta: "Hablemos",
@@ -29,7 +29,8 @@ const content = {
       "Expert support at every stage of the project.",
       "Secure, efficient operation available 24/7.",
     ],
-    imageAlt: "Hands of a specialist working on a laptop with code on screen",
+    imageAlt:
+      "Team of specialists monitoring technology operations on screens in an operations center",
     heading: "Ready to transform your organization?",
     lead: "Let's talk about how we can help you reach your technology goals.",
     cta: "Let's talk",
@@ -45,7 +46,7 @@ export default function CtaStrip({ locale = "es" }) {
         <div className="wrap approach-grid">
           <div className="approach-photo">
             <Image
-              src="/fondos/fondo-ciber.jpg"
+              src="/fondos/fondo-enfoque.png"
               alt={t.imageAlt}
               fill
               sizes="(max-width: 900px) 100vw, 50vw"
