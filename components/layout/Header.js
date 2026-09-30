@@ -11,6 +11,8 @@ import {
   getBlogMenuColumns,
 } from "@/data/nav-menu-data";
 import SearchModal from "../widgets/SearchModal";
+import ContactModal from "../widgets/ContactModal";
+import { whatsappUrl } from "@/lib/contact";
 
 const content = {
   es: {
@@ -41,23 +43,36 @@ const content = {
   },
 };
 
-function MegaMenu({ id, columns, onLinkClick }) {
+function MegaMenu({ id, columns, onLinkClick, onItemAction }) {
   return (
     <div className="mega-menu" id={id}>
       <div className="wrap mega-menu-inner">
         {columns.map((column) => (
           <div className="mega-menu-col" key={column.heading}>
             <h4>{column.heading}</h4>
-            {column.items.map((item) => (
-              <Link
-                key={`${item.href}-${item.title}`}
-                href={item.href}
-                onClick={onLinkClick}
-              >
-                <strong>{item.title}</strong>
-                {item.desc && <small>{item.desc}</small>}
-              </Link>
-            ))}
+            {column.items.map((item) =>
+              item.action ? (
+                <button
+                  key={`${item.action}-${item.title}`}
+                  type="button"
+                  onClick={() => onItemAction?.(item.action)}
+                >
+                  <strong>{item.title}</strong>
+                  {item.desc && <small>{item.desc}</small>}
+                </button>
+              ) : (
+                <Link
+                  key={`${item.href}-${item.title}`}
+                  href={item.href}
+                  target={item.external ? "_blank" : undefined}
+                  rel={item.external ? "noopener noreferrer" : undefined}
+                  onClick={onLinkClick}
+                >
+                  <strong>{item.title}</strong>
+                  {item.desc && <small>{item.desc}</small>}
+                </Link>
+              ),
+            )}
           </div>
         ))}
       </div>
@@ -65,24 +80,67 @@ function MegaMenu({ id, columns, onLinkClick }) {
   );
 }
 
+const supportServiceName = { es: "Soporte técnico", en: "Technical support" };
+
+function getContactMenuColumns(locale) {
+  const t =
+    locale === "en"
+      ? {
+          heading: "Contact",
+          email: "soporte@spectrumt.co",
+          whatsapp: "WhatsApp",
+          form: "Form",
+          helpDesk: "Help desk",
+          spectria: "SpectrIA",
+        }
+      : {
+          heading: "Contacto",
+          email: "soporte@spectrumt.co",
+          whatsapp: "WhatsApp",
+          form: "Formulario",
+          helpDesk: "Mesa de ayuda",
+          spectria: "SpectrIA",
+        };
+
+  return [
+    {
+      heading: t.heading,
+      items: [
+        { title: t.email, href: "mailto:soporte@spectrumt.co" },
+        { title: t.whatsapp, href: whatsappUrl(), external: true },
+        { title: t.form, action: "form" },
+        {
+          title: t.helpDesk,
+          href: "https://soporte.spectrumt.co",
+          external: true,
+        },
+        { title: t.spectria, action: "support" },
+      ],
+    },
+  ];
+}
+
 export default function Header({ locale = "es" }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [activeId, setActiveId] = useState(null);
   const [scrolled, setScrolled] = useState(false);
+  const [formOpen, setFormOpen] = useState(false);
   const pathname = usePathname();
 
   const t = content[locale] || content.es;
-  const navLinks = [
-    {
-      href: locale === "en" ? "/en/#contacto" : "/#contacto",
-      label: t.contacto,
-      id: "contacto",
-    },
-  ];
   const nosotrosMenuColumns = getNosotrosMenuColumns(locale);
   const solutionsMenuColumns = getSolutionsMenuColumns(locale);
   const blogMenuColumns = getBlogMenuColumns(locale);
+  const contactMenuColumns = getContactMenuColumns(locale);
+
+  function handleContactAction(action) {
+    if (action === "form") setFormOpen(true);
+    if (action === "support") {
+      window.dispatchEvent(new Event("spectria:support"));
+    }
+    closeMenu();
+  }
 
   const pathWithoutLocale = pathname.startsWith("/en")
     ? pathname.slice(3) || "/"
@@ -283,18 +341,30 @@ export default function Header({ locale = "es" }) {
                   onLinkClick={closeMenu}
                 />
               </li>
-              {navLinks.map((link) => (
-                <li className="nav-item" key={link.href}>
-                  <Link
-                    className="top-link"
-                    href={link.href}
-                    aria-current={activeId === link.id ? "true" : undefined}
-                    onClick={closeMenu}
-                  >
-                    <span className="top-link-label">{link.label}</span>
-                  </Link>
-                </li>
-              ))}
+              <li
+                className={`nav-item${openDropdown === "contacto" ? " dropdown-open" : ""}`}
+              >
+                <button
+                  className="top-link"
+                  type="button"
+                  aria-expanded={openDropdown === "contacto"}
+                  aria-controls="dropdown-contacto"
+                  onClick={() =>
+                    setOpenDropdown((open) =>
+                      open === "contacto" ? null : "contacto",
+                    )
+                  }
+                >
+                  <span className="top-link-label">{t.contacto}</span>
+                  <CaretIcon className="caret" size={14} />
+                </button>
+                <MegaMenu
+                  id="dropdown-contacto"
+                  columns={contactMenuColumns}
+                  onLinkClick={closeMenu}
+                  onItemAction={handleContactAction}
+                />
+              </li>
             </ul>
             <a
               href="https://soporte.spectrumt.co"
@@ -343,6 +413,14 @@ export default function Header({ locale = "es" }) {
           </div>
         </div>
       </header>
+
+      <ContactModal
+        open={formOpen}
+        onClose={() => setFormOpen(false)}
+        serviceName={supportServiceName[locale] || supportServiceName.es}
+        serviceSlug="soporte"
+        locale={locale}
+      />
     </>
   );
 }

@@ -44,6 +44,7 @@ npm run test:watch # Vitest en modo watch
 | `GEMINI_API_KEY` | Google AI Studio | Autenticación con la API de Gemini para el asistente SpectrIA. |
 | `GEMINI_MODEL` | — | Opcional; sobrescribe el modelo por defecto (`gemini-flash-latest`). |
 | `SITE_URL` | — | Opcional; dominio usado en SEO/sitemap. Si falta, cae a las variables automáticas de Vercel (`VERCEL_URL`). |
+| `NEXT_PUBLIC_GA_ID` | Google Analytics → Administrador → Flujos de datos → ID de métrica (`G-XXXXXXXXXX`) | Opcional; activa Google Analytics (gtag.js). Si falta, el sitio funciona igual, simplemente sin la etiqueta de Analytics. |
 
 En Vercel, cada variable debe marcarse para los ambientes **Production** y **Development** (no solo uno), y las que son credenciales (`BREVO_API_KEY`, `GEMINI_API_KEY`) deben guardarse con **Type: Secret**. Un cambio de variables no aplica a un deployment ya construido — hace falta un **Redeploy**.
 

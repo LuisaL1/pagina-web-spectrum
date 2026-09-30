@@ -411,6 +411,8 @@
   text-align: center;
 }
 
+/* Mismo formato que .process-num (seccion "Como trabajamos"), sin el
+   cambio de color al pasar el cursor: solo el primer nodo va solido. */
 .historia-node {
   position: relative;
   z-index: 1;
@@ -420,19 +422,16 @@
   width: 56px;
   height: 56px;
   margin-bottom: 22px;
-  border: 3px solid var(--color-red);
+  border: 2px solid var(--color-red);
   border-radius: 50%;
   background: var(--color-white);
   font-size: 15px;
   font-weight: 700;
   color: var(--color-red);
-  box-shadow: 0 10px 22px -10px rgba(250, 0, 1, 0.55);
-  transition:
-    background 0.25s ease,
-    color 0.25s ease;
+  box-shadow: 0 0 0 8px #f5f5f6;
 }
 
-.historia-item:hover .historia-node {
+.historia-item:first-child .historia-node {
   background: var(--color-red);
   color: var(--color-white);
 }
@@ -508,8 +507,7 @@
 
   .about-stats li,
   .pillar,
-  .pillar::before,
-  .historia-node {
+  .pillar::before {
     transition: none;
   }
 }

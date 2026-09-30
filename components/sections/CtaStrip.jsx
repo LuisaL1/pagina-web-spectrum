@@ -37,38 +37,40 @@ const content = {
   },
 };
 
-export default function CtaStrip({ locale = "es" }) {
+export default function CtaStrip({ locale = "es", withApproach = false }) {
   const t = content[locale] || content.es;
 
   return (
     <>
-      <section className="approach" id="enfoque">
-        <div className="wrap approach-grid">
-          <div className="approach-photo">
-            <Image
-              src="/fondos/fondo-enfoque.png"
-              alt={t.imageAlt}
-              fill
-              sizes="(max-width: 900px) 100vw, 50vw"
-            />
+      {withApproach && (
+        <section className="approach" id="enfoque">
+          <div className="wrap approach-grid">
+            <div className="approach-photo">
+              <Image
+                src="/fondos/fondo-enfoque.png"
+                alt={t.imageAlt}
+                fill
+                sizes="(max-width: 900px) 100vw, 50vw"
+              />
+            </div>
+            <div className="approach-text">
+              <p className="approach-eyebrow">{t.eyebrow}</p>
+              <h2>{t.approachTitle}</h2>
+              <p className="approach-lead">{t.approachText}</p>
+              <ul className="approach-points">
+                {t.points.map((point) => (
+                  <li key={point}>
+                    <span className="approach-check" aria-hidden="true">
+                      <CheckIcon size={13} />
+                    </span>
+                    {point}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-          <div className="approach-text">
-            <p className="approach-eyebrow">{t.eyebrow}</p>
-            <h2>{t.approachTitle}</h2>
-            <p className="approach-lead">{t.approachText}</p>
-            <ul className="approach-points">
-              {t.points.map((point) => (
-                <li key={point}>
-                  <span className="approach-check" aria-hidden="true">
-                    <CheckIcon size={13} />
-                  </span>
-                  {point}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="cta-strip" id="contacto">
         <div className="wrap">

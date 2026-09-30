@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Header from "@/components/layout/Header";
 import Ecosystem from "@/components/sections/Ecosystem";
+import Process from "@/components/sections/Process";
 import Cases from "@/components/sections/Cases";
 import CasesWithSector from "@/components/sections/CasesWithSector";
 import CtaStrip from "@/components/sections/CtaStrip";
@@ -24,6 +25,7 @@ export default function NosotrosPageEn() {
       <Header locale="en" />
       <main id="main-content">
         <Ecosystem locale="en" />
+        <Process locale="en" />
         <Suspense fallback={<Cases locale="en" />}>
           <CasesWithSector locale="en" />
         </Suspense>

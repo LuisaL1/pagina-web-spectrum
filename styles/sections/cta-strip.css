@@ -6,8 +6,8 @@
 
 /* ---------- Nuestro enfoque ---------- */
 .approach {
-  padding: 88px 0;
-  background: linear-gradient(180deg, #050506 0%, #0d0d0f 100%);
+  padding: 40px 0;
+  background: var(--color-graphite);
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -20,7 +20,7 @@
 
 .approach-photo {
   position: relative;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 12px;
   background: var(--color-graphite);

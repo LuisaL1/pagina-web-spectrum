@@ -1,10 +1,15 @@
-import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { afterEach, describe, it, expect } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
 import CtaStrip from "./CtaStrip";
+
+// Sin esto, el DOM de un render queda montado para el siguiente test del
+// archivo (no hay limpieza automatica configurada), lo que hace fallar los
+// asserts negativos como queryByText(...).not.toBeInTheDocument().
+afterEach(cleanup);
 
 describe("CtaStrip", () => {
   it("renderiza el bloque de enfoque y la franja de contacto con su enlace de WhatsApp", () => {
-    render(<CtaStrip />);
+    render(<CtaStrip withApproach />);
 
     expect(screen.getByText("Tecnología con propósito.")).toBeInTheDocument();
     expect(
@@ -19,8 +24,19 @@ describe("CtaStrip", () => {
     );
   });
 
+  it("no renderiza el bloque de enfoque fuera del inicio", () => {
+    render(<CtaStrip />);
+
+    expect(
+      screen.queryByText("Tecnología con propósito."),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.getByText("¿Listo para transformar tu organización?"),
+    ).toBeInTheDocument();
+  });
+
   it("renderiza los textos en inglés", () => {
-    render(<CtaStrip locale="en" />);
+    render(<CtaStrip locale="en" withApproach />);
 
     expect(screen.getByText("Technology with purpose.")).toBeInTheDocument();
     expect(

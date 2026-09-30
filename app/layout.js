@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
 import { Montserrat } from "next/font/google";
 import ChatWidget from "@/components/widgets/ChatWidget";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { getSiteUrl } from "@/lib/site-url";
 import { buildOrganizationSchema } from "@/lib/structured-data";
 
@@ -76,6 +77,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang={locale} className={montserrat.variable}>
       <body>
+        <GoogleAnalytics />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

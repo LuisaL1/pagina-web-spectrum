@@ -1,6 +1,13 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import { FacebookIcon, InstagramIcon, LinkedInIcon } from "../icons";
 import { localizedHref } from "@/lib/i18n";
+import { whatsappUrl } from "@/lib/contact";
+import ContactModal from "../widgets/ContactModal";
+
+const supportServiceName = { es: "Soporte técnico", en: "Technical support" };
 
 const footerColumnsEs = [
   {
@@ -26,7 +33,7 @@ const footerColumnsEs = [
     title: "Soporte",
     links: [
       { label: "Mesa de ayuda", href: "#contacto" },
-      { label: "Solicitar asesoria", href: "#contacto" },
+      { label: "SpectrIA", action: "support" },
       { label: "WhatsApp", href: "#contacto" },
     ],
   },
@@ -34,8 +41,8 @@ const footerColumnsEs = [
     title: "Contacto",
     links: [
       { label: "soporte@spectrumt.co", href: "mailto:soporte@spectrumt.co" },
-      { label: "spectrumt.co", href: "#" },
-      { label: "Colombia", href: "#" },
+      { label: "WhatsApp", href: whatsappUrl(), external: true },
+      { label: "Formulario", action: "form" },
     ],
   },
 ];
@@ -64,7 +71,7 @@ const footerColumnsEn = [
     title: "Support",
     links: [
       { label: "Help desk", href: "#contacto" },
-      { label: "Request a consultation", href: "#contacto" },
+      { label: "SpectrIA", action: "support" },
       { label: "WhatsApp", href: "#contacto" },
     ],
   },
@@ -72,8 +79,8 @@ const footerColumnsEn = [
     title: "Contact",
     links: [
       { label: "soporte@spectrumt.co", href: "mailto:soporte@spectrumt.co" },
-      { label: "spectrumt.co", href: "#" },
-      { label: "Colombia", href: "#" },
+      { label: "WhatsApp", href: whatsappUrl(), external: true },
+      { label: "Form", action: "form" },
     ],
   },
 ];
@@ -98,6 +105,7 @@ const content = {
 export default function Footer({ locale = "es" }) {
   const footerColumns = locale === "en" ? footerColumnsEn : footerColumnsEs;
   const t = content[locale] || content.es;
+  const [formOpen, setFormOpen] = useState(false);
 
   return (
     <footer>
@@ -147,7 +155,33 @@ export default function Footer({ locale = "es" }) {
               <ul>
                 {column.links.map((link) => (
                   <li key={link.label}>
-                    <a href={link.href}>{link.label}</a>
+                    {link.action === "support" ? (
+                      <button
+                        type="button"
+                        className="footer-link-btn"
+                        onClick={() =>
+                          window.dispatchEvent(new Event("spectria:support"))
+                        }
+                      >
+                        {link.label}
+                      </button>
+                    ) : link.action === "form" ? (
+                      <button
+                        type="button"
+                        className="footer-link-btn"
+                        onClick={() => setFormOpen(true)}
+                      >
+                        {link.label}
+                      </button>
+                    ) : (
+                      <a
+                        href={link.href}
+                        target={link.external ? "_blank" : undefined}
+                        rel={link.external ? "noopener noreferrer" : undefined}
+                      >
+                        {link.label}
+                      </a>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -164,6 +198,14 @@ export default function Footer({ locale = "es" }) {
           </div>
         </div>
       </div>
+
+      <ContactModal
+        open={formOpen}
+        onClose={() => setFormOpen(false)}
+        serviceName={supportServiceName[locale] || supportServiceName.es}
+        serviceSlug="soporte"
+        locale={locale}
+      />
     </footer>
   );
 }

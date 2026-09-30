@@ -33,7 +33,7 @@ export default function HomeEn() {
         <Solutions locale="en" />
         <Partners locale="en" />
         <Blog locale="en" />
-        <CtaStrip locale="en" />
+        <CtaStrip locale="en" withApproach />
       </main>
       <Footer locale="en" />
     </>

@@ -45,7 +45,9 @@ footer {
   font-family: inherit;
   color: var(--color-gray-300);
   cursor: pointer;
-  transition: border-color var(--transition-base), color var(--transition-base);
+  transition:
+    border-color var(--transition-base),
+    color var(--transition-base);
 }
 
 .social a:hover {
@@ -71,6 +73,22 @@ footer {
 }
 
 .footer-col a:hover {
+  color: var(--color-white);
+}
+
+.footer-link-btn {
+  appearance: none;
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  font-size: 13.5px;
+  color: var(--color-gray-300);
+  cursor: pointer;
+  transition: color var(--transition-base);
+}
+
+.footer-link-btn:hover {
   color: var(--color-white);
 }
 
