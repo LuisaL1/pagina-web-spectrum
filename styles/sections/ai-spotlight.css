@@ -27,12 +27,6 @@
   pointer-events: none;
 }
 
-/* Al interactuar con un circulo, el panel sube sobre el texto para que la
-   descripcion no quede tapada. */
-.ai-spotlight-robot-wrap:has(.ai-hotspot:hover, .ai-hotspot:focus-within) {
-  z-index: 3;
-}
-
 /* Caja con la proporcion exacta de ai-sociedad-inteligente.png (1488x1057):
    asi los puntos interactivos, posicionados en %, caen sobre cada punto
    rojo del dibujo. Se desvanece en los bordes izquierdo y derecho para que
@@ -61,104 +55,6 @@
 
 .ai-spotlight-robot {
   object-fit: contain;
-}
-
-/* Circulos interactivos */
-.ai-hotspot {
-  position: absolute;
-  width: 6%;
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  pointer-events: auto;
-}
-
-.ai-hotspot:hover,
-.ai-hotspot:focus-within {
-  z-index: 2;
-}
-
-.ai-hotspot-btn {
-  position: absolute;
-  inset: 0;
-  border: 0;
-  border-radius: 50%;
-  background: transparent;
-  cursor: pointer;
-  transition:
-    box-shadow var(--transition-base),
-    transform var(--transition-base);
-}
-
-.ai-hotspot:hover .ai-hotspot-btn,
-.ai-hotspot-btn:focus-visible {
-  transform: scale(1.06);
-  box-shadow:
-    0 0 0 4px rgba(255, 13, 13, 0.3),
-    0 12px 26px rgba(255, 13, 13, 0.28);
-}
-
-.ai-hotspot-btn:focus-visible {
-  outline: 2px solid var(--color-red);
-  outline-offset: 4px;
-}
-
-.ai-hotspot-tip {
-  position: absolute;
-  left: 50%;
-  width: 230px;
-  padding: 14px 16px;
-  background: var(--color-white);
-  border: 1px solid rgba(2, 2, 2, 0.06);
-  border-radius: 16px;
-  box-shadow: 0 14px 28px -8px rgba(2, 2, 2, 0.22);
-  color: var(--color-black);
-  text-align: left;
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity var(--transition-base),
-    transform var(--transition-base),
-    visibility var(--transition-base);
-}
-
-.ai-hotspot--below .ai-hotspot-tip {
-  top: calc(100% + 12px);
-  transform: translate(-50%, 6px);
-}
-
-.ai-hotspot--above .ai-hotspot-tip {
-  bottom: calc(100% + 12px);
-  transform: translate(-50%, -6px);
-}
-
-.ai-hotspot:hover .ai-hotspot-tip,
-.ai-hotspot:focus-within .ai-hotspot-tip {
-  opacity: 1;
-  visibility: visible;
-  transform: translate(-50%, 0);
-}
-
-.ai-hotspot-tip strong {
-  display: block;
-  font-size: 14px;
-  margin-bottom: 4px;
-  color: var(--color-red);
-}
-
-.ai-hotspot-tip span {
-  display: block;
-  font-size: 12.5px;
-  line-height: 1.45;
-  color: var(--color-gray-700);
-  text-transform: none;
-  font-weight: var(--fw-regular);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ai-hotspot-btn,
-  .ai-hotspot-tip {
-    transition: none;
-  }
 }
 
 .ai-spotlight-inner {

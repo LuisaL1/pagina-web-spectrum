@@ -169,21 +169,12 @@
     );
   }
 
-  /* En movil no hay hover: se recorta la imagen para llenar el espacio con
-     la parte mas interesante (la ciudad), en vez de mostrarla completa con
-     margenes en blanco. Los puntos interactivos dependen de coordenadas
-     calculadas para la imagen completa, asi que se ocultan aqui. */
+  /* En movil se recorta la imagen para llenar el espacio con la parte mas
+     interesante (la ciudad), en vez de mostrarla completa con margenes en
+     blanco. */
   .ai-spotlight-robot {
     object-fit: cover;
     object-position: 68% 55%;
-  }
-
-  .ai-hotspot {
-    display: none;
-  }
-
-  .ai-hotspot-tip {
-    width: min(210px, 56vw);
   }
 
   .ai-spotlight-inner {
