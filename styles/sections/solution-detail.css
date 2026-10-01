@@ -37,22 +37,6 @@
     );
 }
 
-/* Numero de la unidad como marca de agua a la derecha. */
-.solution-hero-num {
-  position: absolute;
-  right: 4%;
-  bottom: 40px;
-  z-index: 1;
-  font-size: clamp(180px, 26vw, 380px);
-  font-weight: 800;
-  line-height: 0.8;
-  letter-spacing: -0.04em;
-  color: transparent;
-  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-  user-select: none;
-}
-
 .solution-hero-inner {
   position: relative;
   z-index: 2;

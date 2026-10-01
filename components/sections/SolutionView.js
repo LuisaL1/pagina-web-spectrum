@@ -55,9 +55,6 @@ export default function SolutionView({ solution, locale = "es" }) {
           sizes="100vw"
           className="solution-hero-bg"
         />
-        <span className="solution-hero-num" aria-hidden="true">
-          {solution.icon}
-        </span>
         <div className="wrap solution-hero-inner">
           <BackLink
             className="solution-back"

@@ -15,7 +15,8 @@ const content = {
     ],
     imageAlt:
       "Equipo de especialistas monitoreando operaciones de tecnología en pantallas de un centro de operaciones",
-    heading: "¿Listo para transformar tu organización?",
+    headingPre: "¿Listo para transformar tu",
+    headingEm: "organización?",
     lead: "Conversemos sobre cómo podemos ayudarte a alcanzar tus objetivos tecnológicos.",
     cta: "Hablemos",
   },
@@ -31,7 +32,8 @@ const content = {
     ],
     imageAlt:
       "Team of specialists monitoring technology operations on screens in an operations center",
-    heading: "Ready to transform your organization?",
+    headingPre: "Ready to transform your",
+    headingEm: "organization?",
     lead: "Let's talk about how we can help you reach your technology goals.",
     cta: "Let's talk",
   },
@@ -75,7 +77,9 @@ export default function CtaStrip({ locale = "es", withApproach = false }) {
       <section className="cta-strip" id="contacto">
         <div className="wrap">
           <div className="cta-strip-text">
-            <h2>{t.heading}</h2>
+            <h2>
+              {t.headingPre} <em>{t.headingEm}</em>
+            </h2>
             <p>{t.lead}</p>
           </div>
           <a

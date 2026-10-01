@@ -16,7 +16,9 @@ describe("CtaStrip", () => {
       screen.getByText("Operación segura, eficiente y disponible 24/7."),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("¿Listo para transformar tu organización?"),
+      screen.getByRole("heading", {
+        name: "¿Listo para transformar tu organización?",
+      }),
     ).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Hablemos" })).toHaveAttribute(
       "href",
@@ -31,7 +33,9 @@ describe("CtaStrip", () => {
       screen.queryByText("Tecnología con propósito."),
     ).not.toBeInTheDocument();
     expect(
-      screen.getByText("¿Listo para transformar tu organización?"),
+      screen.getByRole("heading", {
+        name: "¿Listo para transformar tu organización?",
+      }),
     ).toBeInTheDocument();
   });
 
