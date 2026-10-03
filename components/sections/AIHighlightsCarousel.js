@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRightIcon } from "@/components/icons";
 
 const highlightsEs = [
@@ -73,6 +73,7 @@ function positionOf(index, active) {
 }
 
 const SWIPE_THRESHOLD = 40;
+const AUTOPLAY_DELAY = 5000;
 
 export default function AIHighlightsCarousel({ locale = "es" }) {
   const highlights = locale === "en" ? highlightsEn : highlightsEs;
@@ -80,11 +81,23 @@ export default function AIHighlightsCarousel({ locale = "es" }) {
   const [active, setActive] = useState(0);
   const [dragX, setDragX] = useState(0);
   const [dragging, setDragging] = useState(false);
+  const [paused, setPaused] = useState(false);
   const drag = useRef({ startX: null, moved: false });
 
   function go(direction) {
     setActive((current) => (current + direction + total) % total);
   }
+
+  // Avanza sola cada pocos segundos; se detiene al arrastrar, al pasar el
+  // mouse/foco por encima, o si el usuario prefiere menos movimiento.
+  useEffect(() => {
+    if (dragging || paused) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
+    const id = setInterval(() => go(1), AUTOPLAY_DELAY);
+    return () => clearInterval(id);
+  }, [active, dragging, paused]);
 
   // Arrastre con el dedo (o el mouse): las tarjetas siguen el gesto.
   function handlePointerDown(event) {
@@ -117,7 +130,13 @@ export default function AIHighlightsCarousel({ locale = "es" }) {
   }
 
   return (
-    <div className="ai-carousel">
+    <div
+      className="ai-carousel"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
       <div
         className={`ai-carousel-track${dragging ? " is-dragging" : ""}`}
         style={{ "--drag": `${dragX}px` }}

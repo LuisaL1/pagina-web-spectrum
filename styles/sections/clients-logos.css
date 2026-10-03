@@ -1,0 +1,143 @@
+/*
+  sections/clients-logos.css
+  Estilos exclusivos de components/sections/ClientsLogos: una fila horizontal
+  de cards, una por sector, sobre el fondo claro con manchas de marca de
+  `.about-light`. Cada card trae su etiqueta, una descripcion corta y sus
+  logos (en blanco y negro, sin recuadro) en una grilla de 2 columnas. Todas
+  las cards de una fila miden lo mismo (align-items: stretch); la grilla de
+  logos crece con flex:1 y centra su contenido (align-content: center) para
+  que un sector con pocos logos no quede con espacio vacio pegado abajo.
+*/
+
+.clients-logos-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.clients-logos-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      620px 380px at 100% 0%,
+      rgba(250, 0, 1, 0.07),
+      transparent 70%
+    ),
+    radial-gradient(
+      520px 340px at 0% 100%,
+      rgba(250, 0, 1, 0.05),
+      transparent 70%
+    );
+}
+
+.clients-logos-section > .wrap {
+  position: relative;
+  z-index: 1;
+}
+
+.clients-sectors {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: stretch;
+  gap: 20px;
+  margin-top: 44px;
+}
+
+.clients-sector-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--color-white);
+  border: 1px solid rgba(2, 2, 2, 0.06);
+  border-radius: 20px;
+  box-shadow: 0 24px 48px -28px rgba(2, 2, 2, 0.35);
+  padding: 24px;
+}
+
+.clients-sector-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--color-red), rgba(250, 0, 1, 0.25));
+}
+
+.clients-sector-badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: rgba(250, 0, 1, 0.08);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-red);
+}
+
+.clients-sector-desc {
+  margin-bottom: 20px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--color-gray-700);
+}
+
+.clients-sector-logos {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-content: center;
+  gap: 14px;
+  flex: 1;
+}
+
+.clients-logo {
+  position: relative;
+  height: 56px;
+  padding: 8px;
+}
+
+/* Logos compuestos (escudo + wordmark en una sola imagen, como las
+   secretarias de Bogota): ocupan la fila completa y con mas alto para que
+   no se vean chicos ni apretados. */
+.clients-logo--wide {
+  grid-column: 1 / -1;
+  height: 76px;
+}
+
+/* Cuando un sector tiene un numero impar de logos, el ultimo queda solo en
+   su fila: lo centramos en vez de dejarlo pegado a la izquierda con un
+   espacio vacio al lado. */
+.clients-logo--center {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: calc(50% - 7px);
+}
+
+.clients-logo-img {
+  object-fit: contain;
+  filter: grayscale(1);
+}
+
+@media (max-width: 980px) {
+  .clients-sectors {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+
+@media (max-width: 560px) {
+  .clients-sectors {
+    grid-template-columns: 1fr;
+    margin-top: 28px;
+    gap: 14px;
+  }
+
+  .clients-sector-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+}

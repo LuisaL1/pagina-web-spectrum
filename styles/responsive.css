@@ -228,69 +228,6 @@
     font-size: 30px;
   }
 
-  /* Movil: foto limpia arriba, texto debajo sobre el mismo fondo */
-  .case-stage {
-    display: block;
-    min-height: 0;
-    padding: 0 0 18px;
-  }
-
-  .case-stage-img {
-    height: 250px !important;
-  }
-
-  .case-stage-shade {
-    bottom: auto;
-    height: 250px;
-    background: linear-gradient(
-      to bottom,
-      rgba(2, 2, 2, 0.05) 30%,
-      var(--color-graphite)
-    );
-  }
-
-  .case-stage-body {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 22px;
-    padding: 170px 22px 0;
-  }
-
-  .case-info {
-    max-width: none;
-  }
-
-  .case-stats {
-    width: 100%;
-    gap: 8px;
-  }
-
-  .case-stat {
-    padding: 11px 14px;
-  }
-
-  .case-picker {
-    display: flex;
-    gap: 10px;
-    margin: 22px 0 0;
-    padding: 0 22px 2px;
-    overflow-x: auto;
-    border-top: 0;
-    scroll-snap-type: x proximity;
-    scroll-padding-inline: 22px;
-    scrollbar-width: none;
-  }
-
-  .case-picker::-webkit-scrollbar {
-    display: none;
-  }
-
-  .case-pick {
-    flex: none;
-    width: 148px;
-    scroll-snap-align: start;
-  }
-
   .quality-list {
     display: flex;
     flex-wrap: wrap;
@@ -516,41 +453,6 @@
     font-size: 15.5px;
   }
 
-  .case-stage {
-    border-radius: 18px;
-  }
-
-  .case-stage-body {
-    padding: 160px 18px 0;
-  }
-
-  .case-picker {
-    padding-inline: 18px;
-  }
-
-  .case-pick {
-    width: 138px;
-    min-height: 84px;
-    padding: 10px 12px 12px;
-  }
-
-  .case-pick-name {
-    font-size: 12.5px;
-  }
-
-  .case-count {
-    display: none;
-  }
-
-  .case-info h3 {
-    font-size: 30px;
-  }
-
-  .case-info .case-desc {
-    font-size: 14.5px;
-    line-height: 1.7;
-  }
-
   .blog-hero-card {
     min-height: 400px;
   }
@@ -577,14 +479,6 @@
 
   .blog-row-thumb {
     min-height: 170px;
-  }
-
-  .case-info h3 {
-    font-size: 28px;
-  }
-
-  .case-info .case-subtitle {
-    font-size: 16px;
   }
 
   .solution-hero {
@@ -761,41 +655,6 @@
     font-size: 15.5px;
   }
 
-  .case-stage {
-    border-radius: 18px;
-  }
-
-  .case-stage-body {
-    padding: 160px 18px 0;
-  }
-
-  .case-picker {
-    padding-inline: 18px;
-  }
-
-  .case-pick {
-    width: 138px;
-    min-height: 84px;
-    padding: 10px 12px 12px;
-  }
-
-  .case-pick-name {
-    font-size: 12.5px;
-  }
-
-  .case-count {
-    display: none;
-  }
-
-  .case-info h3 {
-    font-size: 30px;
-  }
-
-  .case-info .case-desc {
-    font-size: 14.5px;
-    line-height: 1.7;
-  }
-
   .blog-hero-card {
     min-height: 400px;
   }
@@ -822,14 +681,6 @@
 
   .blog-row-thumb {
     min-height: 170px;
-  }
-
-  .case-info h3 {
-    font-size: 28px;
-  }
-
-  .case-info .case-subtitle {
-    font-size: 16px;
   }
 
   .quality-strip {

@@ -1,9 +1,7 @@
-import { Suspense } from "react";
 import Header from "@/components/layout/Header";
 import Ecosystem from "@/components/sections/Ecosystem";
 import Process from "@/components/sections/Process";
-import Cases from "@/components/sections/Cases";
-import CasesWithSector from "@/components/sections/CasesWithSector";
+import ClientsLogos from "@/components/sections/ClientsLogos";
 import CtaStrip from "@/components/sections/CtaStrip";
 import Footer from "@/components/layout/Footer";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
@@ -26,9 +24,7 @@ export default function NosotrosPageEn() {
       <main id="main-content">
         <Ecosystem locale="en" />
         <Process locale="en" />
-        <Suspense fallback={<Cases locale="en" />}>
-          <CasesWithSector locale="en" />
-        </Suspense>
+        <ClientsLogos locale="en" />
         <CtaStrip locale="en" />
       </main>
       <Footer locale="en" />

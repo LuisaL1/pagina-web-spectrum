@@ -25,7 +25,7 @@ import "@/styles/sections/ecosystem.css";
 import "@/styles/sections/quality-strip.css";
 import "@/styles/sections/solutions.css";
 import "@/styles/sections/partners.css";
-import "@/styles/sections/cases.css";
+import "@/styles/sections/clients-logos.css";
 import "@/styles/sections/team.css";
 import "@/styles/sections/culture.css";
 import "@/styles/sections/blog.css";
