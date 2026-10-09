@@ -1,3 +1,4 @@
+import { headers } from "next/headers";
 import Script from "next/script";
 
 /*
@@ -9,17 +10,22 @@ import Script from "next/script";
   sin la variable configurada), para no ensuciar las metricas ni gastar la
   cuota del proyecto de Analytics con visitas de prueba.
 */
-export default function GoogleAnalytics() {
+export default async function GoogleAnalytics() {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
   if (!gaId) return null;
+
+  // Nonce de la CSP (lo genera middleware.js): sin el, script-src bloquea
+  // tanto el gtag.js externo como el snippet inline de configuracion.
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
 
   return (
     <>
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
         strategy="afterInteractive"
+        nonce={nonce}
       />
-      <Script id="google-analytics" strategy="afterInteractive">
+      <Script id="google-analytics" strategy="afterInteractive" nonce={nonce}>
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
