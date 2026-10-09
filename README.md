@@ -65,7 +65,7 @@ spectrum-web/
 │   └── api/                      # Route handlers: chat (SpectrIA), contacto (Brevo)
 ├── components/                   # CAPA DE PRESENTACIÓN: UI
 │   ├── layout/                   # Header, Footer — chrome compartido entre paginas
-│   ├── sections/                 # Hero, Ecosystem, Solutions, Cases, Partners,
+│   ├── sections/                 # Hero, Ecosystem, Solutions, Partners, ClientsLogos,
 │   │                              # Blog, Team, Culture, Novedades, DataPolicy, CtaStrip
 │   ├── widgets/                  # ChatWidget, SearchModal, InfoRequestForm
 │   └── icons/
@@ -97,7 +97,7 @@ spectrum-web/
 
 - **Capas explícitas**: `app/` + `components/` (presentación), `lib/` (negocio) y `data/` (datos) se corresponden 1:1 con el modelo de arquitectura documentado en `ARCHITECTURE.md`. Ninguna capa inferior importa de una superior.
 - **Componentes por rol, no en una lista plana**: `components/layout` (chrome compartido), `components/sections` (bloques de una página) y `components/widgets` (piezas interactivas autocontenidas) separan responsabilidades distintas dentro de la UI.
-- **Client components solo donde hace falta**: `Header`, `Cases`, `ChatWidget`, `SearchModal` e `InfoRequestForm` son los componentes con interactividad (`"use client"`); el resto son componentes de servidor, estáticos y ligeros.
+- **Client components solo donde hace falta**: `Header`, `Footer`, `Solutions`, `AIHighlightsCarousel`, `ChatWidget`, `SearchModal`, `ContactModal` e `InfoRequestForm` son los componentes con interactividad (`"use client"`); el resto son componentes de servidor, estáticos y ligeros.
 - **CSS organizado por dueño**: `styles/` refleja la misma subdivisión que `components/` (`shared/`, `layout/`, `sections/`, `widgets/`), en vez de archivos monolíticos con estilos de todos los componentes mezclados.
 - **`public/`**: convención de Next.js para archivos estáticos servidos tal cual (logos, fondos, PDFs del portafolio).
 

@@ -27,10 +27,6 @@ export function SearchIcon(props) {
   return <BsIcon name="search" {...props} />;
 }
 
-export function MenuIcon(props) {
-  return <BsIcon name="list" {...props} />;
-}
-
 export function CloseIcon(props) {
   return <BsIcon name="x-lg" {...props} />;
 }
@@ -45,10 +41,6 @@ export function ArrowRightIcon(props) {
 
 export function CheckIcon(props) {
   return <BsIcon name="check2" {...props} />;
-}
-
-export function ChatIcon(props) {
-  return <BsIcon name="chat-dots" {...props} />;
 }
 
 export function SendIcon(props) {
