@@ -4,11 +4,11 @@ import Process from "@/components/sections/Process";
 import ClientsLogos from "@/components/sections/ClientsLogos";
 import CtaStrip from "@/components/sections/CtaStrip";
 import Footer from "@/components/layout/Footer";
-import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+import { buildAlternates, buildOpenGraph, pageTitle } from "@/lib/seo";
 
-const title = "Nosotros | Spectrum";
+const title = pageTitle("Nosotros");
 const description =
-  "Quiénes somos, nuestra historia, misión y visión como ecosistema tecnológico.";
+  "Conoce Spectrum Technology: quiénes somos, nuestra historia, misión y visión como ecosistema tecnológico de infraestructura, ciberseguridad y conectividad en Colombia.";
 
 export const metadata = {
   title,

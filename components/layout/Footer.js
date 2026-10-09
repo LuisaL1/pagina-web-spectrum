@@ -89,14 +89,14 @@ const content = {
   es: {
     tagline:
       "Ecosistema tecnológico de infraestructura, ciberseguridad y conectividad. Future Powered.",
-    rights: "© 2026 Spectrum. Todos los derechos reservados.",
+    rights: "© 2026 Spectrum Technology. Todos los derechos reservados.",
     privacy: "Politica de privacidad",
     terms: "Terminos de uso",
   },
   en: {
     tagline:
       "A technology ecosystem of infrastructure, cybersecurity and connectivity. Future Powered.",
-    rights: "© 2026 Spectrum. All rights reserved.",
+    rights: "© 2026 Spectrum Technology. All rights reserved.",
     privacy: "Privacy policy",
     terms: "Terms of use",
   },
@@ -115,7 +115,7 @@ export default function Footer({ locale = "es" }) {
             <a href={localizedHref(locale, "/")} className="logo">
               <Image
                 src="/logos/logo-spectrum.png"
-                alt="Spectrum"
+                alt="Spectrum Technology"
                 width={837}
                 height={136}
                 className="logo-img"

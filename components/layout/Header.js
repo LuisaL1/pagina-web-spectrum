@@ -237,7 +237,7 @@ export default function Header({ locale = "es" }) {
           <Link href={locale === "en" ? "/en" : "/"} className="logo">
             <Image
               src="/logos/logo-spectrum.png"
-              alt="Spectrum"
+              alt="Spectrum Technology"
               width={837}
               height={136}
               className="logo-img"

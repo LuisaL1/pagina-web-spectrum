@@ -3,7 +3,11 @@ import { Montserrat } from "next/font/google";
 import ChatWidget from "@/components/widgets/ChatWidget";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { getSiteUrl } from "@/lib/site-url";
-import { buildOrganizationSchema } from "@/lib/structured-data";
+import { SITE_NAME } from "@/lib/seo";
+import {
+  buildOrganizationSchema,
+  buildWebSiteSchema,
+} from "@/lib/structured-data";
 
 import "@/styles/variables.css";
 import "@/styles/base.css";
@@ -48,20 +52,22 @@ const montserrat = Montserrat({
 
 export const metadata = {
   metadataBase: new URL(getSiteUrl()),
-  title: "Spectrum | Future Powered",
+  title: `${SITE_NAME} | Infraestructura TI, ciberseguridad y conectividad`,
   description:
-    "Spectrum es un ecosistema tecnológico de infraestructura, ciberseguridad y conectividad para organizaciones públicas y privadas.",
+    "Spectrum Technology integra infraestructura tecnológica, ciberseguridad, conectividad e inteligencia artificial para empresas y entidades públicas en Colombia.",
+  applicationName: SITE_NAME,
   openGraph: {
-    title: "Spectrum | Future Powered",
+    title: SITE_NAME,
     description:
       "Infraestructura tecnológica y ciberseguridad diseñadas como un mismo ecosistema.",
     type: "website",
+    siteName: SITE_NAME,
     images: [
       {
         url: "/logos/logo-spectrum.png",
         width: 2172,
         height: 724,
-        alt: "Spectrum",
+        alt: SITE_NAME,
       },
     ],
   },
@@ -82,6 +88,12 @@ export default async function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(buildOrganizationSchema()),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(buildWebSiteSchema()),
           }}
         />
         <a className="skip-link" href="#main-content">

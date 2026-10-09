@@ -4,7 +4,7 @@ import CtaStrip from "@/components/sections/CtaStrip";
 import SolutionView from "@/components/sections/SolutionView";
 import Footer from "@/components/layout/Footer";
 import { solutions, getSolutionBySlug } from "@/data/solutions-data";
-import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+import { buildAlternates, buildOpenGraph, pageTitle } from "@/lib/seo";
 import { buildBreadcrumbSchema } from "@/lib/structured-data";
 
 const locale = "en";
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const solution = getSolutionBySlug(slug, locale);
   if (!solution) return {};
-  const title = `${solution.title} | Spectrum`;
+  const title = pageTitle(solution.title);
   const description = solution.intro;
   const path = `/soluciones/${slug}`;
   return {

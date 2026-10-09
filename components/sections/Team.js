@@ -92,7 +92,7 @@ export default function Team({ locale = "es" }) {
       <div className="wrap">
         <div className="section-head">
           <p className="eyebrow">{t.eyebrow}</p>
-          <h2>{t.heading}</h2>
+          <h1>{t.heading}</h1>
           <p>{t.lead}</p>
         </div>
         <div className="team-group team-group--lead" id="liderazgo">

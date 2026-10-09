@@ -37,7 +37,7 @@ export default function BlogArchive({ locale = "es" }) {
         </Link>
         <div className="section-head">
           <p className="eyebrow">{t.eyebrow}</p>
-          <h2>{t.heading}</h2>
+          <h1>{t.heading}</h1>
           <p>{t.lead}</p>
         </div>
 

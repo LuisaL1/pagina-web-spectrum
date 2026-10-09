@@ -2,11 +2,11 @@ import Header from "@/components/layout/Header";
 import Novedades from "@/components/sections/Novedades";
 import CtaStrip from "@/components/sections/CtaStrip";
 import Footer from "@/components/layout/Footer";
-import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+import { buildAlternates, buildOpenGraph, pageTitle } from "@/lib/seo";
 
-const title = "News | Spectrum";
+const title = pageTitle("News");
 const description =
-  "News, launches and technical content from Spectrum on infrastructure, cybersecurity and connectivity.";
+  "News, launches and technical content from Spectrum Technology on infrastructure, cybersecurity and connectivity.";
 
 export const metadata = {
   title,

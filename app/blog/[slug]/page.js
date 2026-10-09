@@ -4,8 +4,9 @@ import ArticleView from "@/components/sections/ArticleView";
 import CtaStrip from "@/components/sections/CtaStrip";
 import Footer from "@/components/layout/Footer";
 import { articles, getArticleBySlug, getArticles } from "@/data/articles";
-import { buildAlternates, buildOpenGraph } from "@/lib/seo";
-import { buildBreadcrumbSchema } from "@/lib/structured-data";
+import { buildAlternates, buildOpenGraph, pageTitle } from "@/lib/seo";
+import { localizedHref } from "@/lib/i18n";
+import { buildArticleSchema, buildBreadcrumbSchema } from "@/lib/structured-data";
 
 const locale = "es";
 
@@ -17,14 +18,21 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const article = getArticleBySlug(slug, locale);
   if (!article) return {};
-  const title = `${article.title} | Spectrum`;
+  const title = pageTitle(article.title);
   const description = article.excerpt;
   const path = `/blog/${slug}`;
   return {
     title,
     description,
     alternates: buildAlternates(locale, path),
-    ...buildOpenGraph({ title, description, locale, path }),
+    ...buildOpenGraph({
+      title,
+      description,
+      locale,
+      path,
+      type: "article",
+      image: article.bg,
+    }),
   };
 }
 
@@ -41,12 +49,24 @@ export default async function ArticlePage({ params }) {
     { name: "Blog", path: "/blog" },
     { name: article.title, path: `/blog/${slug}` },
   ]);
+  const articleSchema = buildArticleSchema({
+    type: "BlogPosting",
+    title: article.title,
+    description: article.excerpt,
+    path: localizedHref(locale, `/blog/${slug}`),
+    locale,
+    image: article.bg,
+  });
 
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
       <Header locale={locale} />
       <main id="main-content">

@@ -2,11 +2,11 @@ import Header from "@/components/layout/Header";
 import BlogArchive from "@/components/sections/BlogArchive";
 import CtaStrip from "@/components/sections/CtaStrip";
 import Footer from "@/components/layout/Footer";
-import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+import { buildAlternates, buildOpenGraph, pageTitle } from "@/lib/seo";
 
-const title = "Blog | Spectrum";
+const title = pageTitle("Blog");
 const description =
-  "Artículos técnicos de Spectrum sobre infraestructura, ciberseguridad, conectividad e inteligencia artificial.";
+  "Artículos técnicos de Spectrum Technology sobre infraestructura, ciberseguridad, conectividad e inteligencia artificial.";
 
 export const metadata = {
   title,

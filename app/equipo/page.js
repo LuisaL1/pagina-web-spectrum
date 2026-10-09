@@ -2,10 +2,10 @@ import Header from "@/components/layout/Header";
 import Team from "@/components/sections/Team";
 import Culture from "@/components/sections/Culture";
 import Footer from "@/components/layout/Footer";
-import { buildAlternates, buildOpenGraph } from "@/lib/seo";
+import { buildAlternates, buildOpenGraph, pageTitle } from "@/lib/seo";
 
-const title = "Equipo | Spectrum";
-const description = "Conoce al equipo directivo y de trabajo que hace posible a Spectrum.";
+const title = pageTitle("Equipo");
+const description = "Conoce al equipo directivo y de trabajo que hace posible a Spectrum Technology.";
 
 export const metadata = {
   title,

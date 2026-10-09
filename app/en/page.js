@@ -10,9 +10,10 @@ import CtaStrip from "@/components/sections/CtaStrip";
 import Footer from "@/components/layout/Footer";
 import { buildAlternates, buildOpenGraph } from "@/lib/seo";
 
-const title = "Spectrum | Future Powered";
+const title =
+  "Spectrum Technology | IT Infrastructure, Cybersecurity & Connectivity";
 const description =
-  "Spectrum is a technology ecosystem of infrastructure, cybersecurity and connectivity for public and private organizations.";
+  "Spectrum Technology integrates IT infrastructure, cybersecurity, connectivity and artificial intelligence for companies and public institutions in Colombia, with 24/7 NOC and SOC.";
 
 export const metadata = {
   title,

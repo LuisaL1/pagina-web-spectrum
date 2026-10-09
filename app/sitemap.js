@@ -1,10 +1,11 @@
 import { getSiteUrl } from "@/lib/site-url";
+import { localizedHref } from "@/lib/i18n";
 import { solutions } from "@/data/solutions-data";
 import { articles } from "@/data/articles";
 import { news } from "@/data/news";
 
 const staticPaths = [
-  "",
+  "/",
   "/nosotros",
   "/equipo",
   "/novedades",
@@ -12,33 +13,37 @@ const staticPaths = [
   "/politica-de-datos",
 ];
 
+const LOCALES = ["es", "en"];
+
 export default function sitemap() {
   const siteUrl = getSiteUrl();
   const now = new Date();
-
-  const entriesFor = (prefix) => {
-    const staticRoutes = staticPaths.map((path) => ({
-      url: `${siteUrl}${prefix}${path}`,
-      lastModified: now,
-    }));
-
-    const solutionRoutes = solutions.map((solution) => ({
-      url: `${siteUrl}${prefix}/soluciones/${solution.slug}`,
-      lastModified: now,
-    }));
-
-    const articleRoutes = articles.map((article) => ({
-      url: `${siteUrl}${prefix}/blog/${article.slug}`,
-      lastModified: now,
-    }));
-
-    const newsRoutes = news.map((item) => ({
-      url: `${siteUrl}${prefix}/novedades/${item.slug}`,
-      lastModified: now,
-    }));
-
-    return [...staticRoutes, ...solutionRoutes, ...articleRoutes, ...newsRoutes];
+  // Misma forma que el canonical de cada pagina: el home es el dominio sin
+  // "/" final.
+  const absolute = (locale, path) => {
+    const href = localizedHref(locale, path);
+    return href === "/" ? siteUrl : `${siteUrl}${href}`;
   };
 
-  return [...entriesFor(""), ...entriesFor("/en")];
+  const paths = [
+    ...staticPaths,
+    ...solutions.map((solution) => `/soluciones/${solution.slug}`),
+    ...articles.map((article) => `/blog/${article.slug}`),
+    ...news.map((item) => `/novedades/${item.slug}`),
+  ];
+
+  // Cada URL declara su par en el otro idioma (hreflang), igual que las
+  // etiquetas <link rel="alternate"> de buildAlternates.
+  return LOCALES.flatMap((locale) =>
+    paths.map((path) => ({
+      url: absolute(locale, path),
+      lastModified: now,
+      alternates: {
+        languages: {
+          es: absolute("es", path),
+          en: absolute("en", path),
+        },
+      },
+    })),
+  );
 }

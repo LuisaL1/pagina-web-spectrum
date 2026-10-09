@@ -68,7 +68,7 @@ export async function POST(request) {
   } = data;
 
   const senderEmail = process.env.BREVO_SENDER_EMAIL;
-  const senderName = process.env.BREVO_SENDER_NAME || "Spectrum";
+  const senderName = process.env.BREVO_SENDER_NAME || "Spectrum Technology";
   const notifyTo = process.env.CONTACT_NOTIFY_EMAIL || "soporte@spectrumt.co";
   const infoListId = process.env.BREVO_LIST_ID_INFO;
 
@@ -119,7 +119,7 @@ export async function POST(request) {
     confirmationSubject = `Gracias por tu interés en ${solution.title}`;
     confirmationHtml = buildServiceRequestEmail({ solution, nombre });
   } else if (servicioSlug === "soporte") {
-    confirmationSubject = "Recibimos tu solicitud de soporte - Spectrum";
+    confirmationSubject = "Recibimos tu solicitud de soporte - Spectrum Technology";
     confirmationHtml = buildSupportRequestEmail({ nombre });
   }
 
