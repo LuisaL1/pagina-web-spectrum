@@ -16,6 +16,7 @@ Repositorio: [SpectrumDevelop/pagina-web-spectrum](https://github.com/SpectrumDe
 - [Google Analytics](#google-analytics)
 - [Seguridad](#seguridad)
 - [Testing](#testing) y [Despliegue](#despliegue)
+- [Cómo contribuir (flujo con Git)](#cómo-contribuir-flujo-con-git)
 
 ## Cómo correrlo
 
@@ -245,6 +246,92 @@ El sitio corre en **Vercel**, que ejecuta el middleware y las rutas de API de Ne
 2. `BREVO_API_KEY` y `GEMINI_API_KEY` están guardadas como **Secret**, sin alertas de "Needs attention" en el panel de Vercel.
 3. El remitente (`BREVO_SENDER_EMAIL`) o el dominio completo está verificado/autenticado en Brevo.
 4. Se ejecutó **Redeploy** después del último cambio de variables — no se aplican solas a un build existente.
+
+## Cómo contribuir (flujo con Git)
+
+`main` es la rama de producción: **todo lo que llega a `main` se publica en el sitio** (Vercel despliega automáticamente). Por eso no se trabaja directamente sobre `main`. Cada cambio nuevo se hace en su propia rama y entra a `main` por medio de un *pull request*.
+
+### 1. Crear una rama a partir de `main` actualizado
+
+```bash
+git checkout main
+git pull origin main
+git checkout -b feat/nombre-corto-del-cambio
+```
+
+Prefijos para el nombre de la rama (los mismos que en los commits):
+
+| Prefijo | Para qué | Ejemplo |
+| --- | --- | --- |
+| `feat/` | Funcionalidad o sección nueva | `feat/banner-cookies` |
+| `fix/` | Corrección de un error | `fix/menu-movil-no-cierra` |
+| `content/` | Solo contenido: artículos, novedades, textos, imágenes | `content/articulo-noviembre` |
+| `docs/` | Documentación | `docs/readme-seo` |
+| `chore/` | Mantenimiento: dependencias, limpieza, configuración | `chore/actualiza-next` |
+
+Una rama = un tema. Si aparece algo distinto a mitad de camino, va en otra rama.
+
+### 2. Hacer commits pequeños y descriptivos
+
+El repositorio sigue [Conventional Commits](https://www.conventionalcommits.org/es/), en español:
+
+```bash
+git add <archivos>
+git commit -m "feat: agrega banner de consentimiento de cookies"
+git commit -m "fix(seo): corrige canonical de las páginas en inglés"
+```
+
+### 3. Verificar antes de subir
+
+```bash
+npm run lint
+npm test
+npm run build
+```
+
+Las tres deben terminar sin errores. Si el cambio toca páginas, revisar también en `npm run dev` las dos versiones (`/` y `/en/...`) y la vista móvil.
+
+### 4. Subir la rama y abrir un pull request
+
+```bash
+git push -u origin feat/nombre-corto-del-cambio
+```
+
+En GitHub, abrir un **pull request hacia `main`** con:
+
+- Qué cambia y por qué.
+- Capturas si hay cambios visuales.
+- El enlace del **preview de Vercel** (Vercel lo genera solo para cada rama y lo comenta en el PR). Ahí se revisa el cambio funcionando antes de publicarlo.
+
+Si el cambio agrega o mueve páginas, revisar la sección [Agregar una página nueva](#agregar-una-página-nueva) (SEO). Si agrega servicios externos, revisar [Si se agregan otros terceros](#si-se-agregan-otros-terceros) (CSP).
+
+### 5. Revisión y merge
+
+- Otra persona del equipo revisa el PR, idealmente sobre el preview de Vercel.
+- Al aprobarlo, hacer **"Squash and merge"**: deja un solo commit limpio en `main` con el mensaje del PR.
+- Borrar la rama después del merge (GitHub ofrece el botón).
+- Vercel publica `main` en producción automáticamente. Verificar el sitio en vivo después del merge.
+
+### Mantener la rama al día
+
+Si `main` avanzó mientras se trabajaba en la rama:
+
+```bash
+git checkout main
+git pull origin main
+git checkout feat/nombre-corto-del-cambio
+git merge main
+```
+
+Resolver los conflictos si los hay, volver a correr `npm test` y `npm run build`, y hacer `git push`.
+
+### Recomendado en GitHub
+
+En **Settings → Branches → Add branch ruleset** sobre `main`:
+
+- Exigir pull request antes de hacer merge (bloquea el push directo a `main`).
+- Exigir al menos una aprobación.
+- Bloquear el force push y el borrado de la rama.
 
 ## Próximos pasos sugeridos
 
