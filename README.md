@@ -56,7 +56,6 @@ npm run test:watch # Vitest en modo watch
 | `BREVO_SENDER_NAME` | — | Nombre visible del remitente (por defecto `Spectrum`). |
 | `CONTACT_NOTIFY_EMAIL` | — | Bandeja interna que recibe cada solicitud del formulario de contacto. |
 | `BREVO_LIST_ID_INFO` | Brevo → Contacts → Lists | Lista a la que se agrega el contacto tras solicitar información. |
-| `BREVO_LIST_ID_BOLETIN` | Brevo → Contacts → Lists | Lista del boletín/newsletter. |
 | `GEMINI_API_KEY` | Google AI Studio | Autenticación con la API de Gemini para el asistente SpectrIA. |
 | `GEMINI_MODEL` | — | Opcional; sobrescribe el modelo por defecto (`gemini-flash-latest`). |
 | `SITE_URL` | — | Opcional; dominio usado en SEO/sitemap. Si falta, cae a las variables automáticas de Vercel (`VERCEL_URL`). |
