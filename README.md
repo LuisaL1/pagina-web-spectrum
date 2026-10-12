@@ -4,11 +4,26 @@ Sitio web corporativo de Spectrum (infraestructura tecnológica y ciberseguridad
 
 No es un sitio estático: incluye rutas de servidor propias (formulario de contacto vía Brevo, asistente de IA **SpectrIA** vía Gemini) y un middleware que aplica una política de seguridad de contenido (CSP) por petición. Está desplegado en **Vercel**.
 
+Repositorio: [SpectrumDevelop/pagina-web-spectrum](https://github.com/SpectrumDevelop/pagina-web-spectrum)
+
+## Contenido
+
+- [Cómo correrlo](#cómo-correrlo)
+- [Variables de entorno](#variables-de-entorno)
+- [Arquitectura](#arquitectura) y [Estructura del proyecto](#estructura-del-proyecto)
+- [Internacionalización](#internacionalización)
+- [SEO](#seo)
+- [Google Analytics](#google-analytics)
+- [Seguridad](#seguridad)
+- [Testing](#testing) y [Despliegue](#despliegue)
+
 ## Cómo correrlo
 
 Requiere Node.js `>=18.18.0`.
 
 ```bash
+git clone https://github.com/SpectrumDevelop/pagina-web-spectrum.git
+cd pagina-web-spectrum
 npm install
 ```
 
@@ -64,6 +79,7 @@ spectrum-web/
 │   ├── robots.js, sitemap.js     # SEO tecnico generado en build time
 │   └── api/                      # Route handlers: chat (SpectrIA), contacto (Brevo)
 ├── components/                   # CAPA DE PRESENTACIÓN: UI
+│   ├── GoogleAnalytics.js        # Carga gtag.js con el nonce de la CSP (ver "Google Analytics")
 │   ├── layout/                   # Header, Footer — chrome compartido entre paginas
 │   ├── sections/                 # Hero, Ecosystem, Solutions, Partners, ClientsLogos,
 │   │                              # Blog, Team, Culture, Novedades, DataPolicy, CtaStrip
@@ -76,8 +92,8 @@ spectrum-web/
 │   ├── validation.js             # Valida/normaliza el payload de contacto
 │   ├── rate-limit.js             # Limitador de tasa en memoria para /api/*
 │   ├── i18n.js                   # Construccion de rutas localizadas (es/en)
-│   ├── seo.js                    # Canonical, hreflang, Open Graph/Twitter por pagina
-│   ├── structured-data.js        # JSON-LD (Organization, BreadcrumbList)
+│   ├── seo.js                    # Nombre de marca, <title>, canonical, hreflang, Open Graph/Twitter
+│   ├── structured-data.js        # JSON-LD (Organization, WebSite, BlogPosting/NewsArticle, BreadcrumbList)
 │   └── site-url.js               # Resuelve el dominio publico segun el entorno
 ├── data/                          # CAPA DE DATOS: contenido estatico
 │   ├── solutions-data.js, articles.js, news.js, nav-menu-data.js
@@ -105,9 +121,90 @@ spectrum-web/
 
 El sitio existe en español (`/`) y en inglés (`/en/...`). El middleware detecta el prefijo `/en` y lo expone a las páginas vía la cabecera `x-locale`; `lib/i18n.js` construye los enlaces localizados y `lib/seo.js` genera las etiquetas `hreflang` correspondientes para evitar contenido duplicado ante buscadores.
 
+## SEO
+
+Todo el SEO técnico usa la [Metadata API](https://nextjs.org/docs/app/building-your-application/optimizing/metadata) del App Router de Next.js: las etiquetas se generan en el servidor y llegan en el HTML inicial, sin depender de JavaScript del cliente.
+
+### Dónde vive cada pieza
+
+| Pieza | Archivo | Qué hace |
+| --- | --- | --- |
+| Dominio público | `lib/site-url.js` | Resuelve la URL base: `SITE_URL` → `VERCEL_PROJECT_PRODUCTION_URL` → `VERCEL_URL` → `https://spectrumt.co`. Todo lo demás (canonical, sitemap, JSON-LD) parte de aquí. |
+| Metadata por defecto | `app/layout.js` | `metadataBase`, título y descripción del home, Open Graph por defecto (logo), favicon y `applicationName`. |
+| Nombre de marca y títulos | `lib/seo.js` → `SITE_NAME`, `pageTitle()` | Todas las páginas usan `"<Página> \| Spectrum Technology"`. El nombre debe ser idéntico en `<title>`, `og:site_name` y el schema `WebSite`, porque Google arma el "nombre del sitio" del resultado a partir de esas tres señales. |
+| Canonical + hreflang | `lib/seo.js` → `buildAlternates(locale, path)` | Canonical de la página y alternativas `es`, `en` y `x-default` (apunta a español). Evita que `/x` y `/en/x` compitan como contenido duplicado. |
+| Open Graph / Twitter Card | `lib/seo.js` → `buildOpenGraph({...})` | Vista previa al compartir en redes (`es_CO` / `en_US`). Las páginas de blog y novedades usan `type: "article"` y la foto de portada en vez del logo. |
+| Datos estructurados (JSON-LD) | `lib/structured-data.js` | `Organization` y `WebSite` (una vez, en el layout raíz), `BlogPosting` (blog), `NewsArticle` (novedades) y `BreadcrumbList` (soluciones, blog y novedades). |
+| robots.txt | `app/robots.js` | Permite todo excepto `/api/` y declara la ubicación del sitemap. |
+| sitemap.xml | `app/sitemap.js` | Lista las páginas estáticas + cada solución, artículo y novedad (generados desde `data/`) en ambos idiomas, con su par `hreflang`. Se actualiza solo al agregar contenido en `data/`. |
+| Encabezados | `components/sections/*` | Cada página tiene un único `<h1>` (Hero en el home, y el título en soluciones, blog, novedades, equipo, nosotros y política de datos). |
+
+> **Ojo con Open Graph:** Next.js no fusiona el objeto `openGraph` del layout con el de la página — si la página lo define, reemplaza el completo. Por eso cada página usa `buildOpenGraph()`, que devuelve el bloque entero.
+
+### Agregar una página nueva
+
+1. Crear la página en `app/<ruta>/page.js` y su espejo en `app/en/<ruta>/page.js`.
+2. Exportar `metadata` (o `generateMetadata` si la ruta es dinámica) con `pageTitle()`, una `description` propia, `buildAlternates(locale, path)` y `buildOpenGraph({...})`. Ejemplo:
+
+   ```js
+   import { buildAlternates, buildOpenGraph, pageTitle } from "@/lib/seo";
+
+   const title = pageTitle("Nosotros");
+   const description = "Conoce Spectrum Technology: ...";
+
+   export const metadata = {
+     title,
+     description,
+     alternates: buildAlternates("es", "/nosotros"),
+     ...buildOpenGraph({ title, description, locale: "es", path: "/nosotros" }),
+   };
+   ```
+
+3. Asegurar que la página tenga exactamente un `<h1>`.
+4. Si es una página estática, agregar su ruta a `staticPaths` en `app/sitemap.js` (las soluciones, artículos y novedades se agregan solos).
+5. Si es una página de detalle, renderizar su `BreadcrumbList` (y `BlogPosting`/`NewsArticle` si aplica) con un `<script type="application/ld+json">`, como en `app/blog/[slug]/page.js`.
+
+### Verificar
+
+- `https://<dominio>/sitemap.xml` y `https://<dominio>/robots.txt` en el navegador.
+- [Rich Results Test](https://search.google.com/test/rich-results) de Google para validar el JSON-LD de una URL.
+- Tests: `lib/seo.test.js` y `lib/structured-data.test.js` (`npm test`).
+- En **Google Search Console**, enviar `https://<dominio>/sitemap.xml` una vez por propiedad, y volver a solicitar indexación de una URL después de cambios importantes.
+
+## Google Analytics
+
+El sitio usa **Google Analytics 4** mediante la etiqueta `gtag.js`, cargada desde `components/GoogleAnalytics.js` y montada en `app/layout.js` (por lo tanto está en todas las páginas, en ambos idiomas).
+
+### Cómo funciona
+
+1. `GoogleAnalytics` lee `NEXT_PUBLIC_GA_ID`. **Si la variable no existe, no renderiza nada** — así las visitas de desarrollo local no ensucian las métricas.
+2. Carga `https://www.googletagmanager.com/gtag/js?id=<ID>` y el snippet de configuración (`gtag('config', '<ID>')`) con `next/script` y `strategy="afterInteractive"`, para no bloquear el render ni la hidratación.
+3. Ambos scripts llevan el **nonce de la CSP**: `middleware.js` genera un nonce por petición y lo pasa en la cabecera `x-nonce`; el componente lo lee con `headers()`. Sin ese nonce, la CSP bloquearía la etiqueta.
+4. La CSP de `middleware.js` permite los dominios de Google que gtag necesita:
+   - `script-src`: `https://www.googletagmanager.com`
+   - `img-src` y `connect-src`: `*.google-analytics.com`, `*.analytics.google.com`, `*.googletagmanager.com` (envío de hits por fetch/beacon/píxel).
+
+Solo se envían las métricas por defecto de GA4 (páginas vistas y la *medición mejorada* configurada en la propiedad). No hay eventos personalizados (`gtag('event', ...)`) en el código por ahora.
+
+### Configurarlo
+
+1. En [Google Analytics](https://analytics.google.com): **Administrador → Flujos de datos → Web** → copiar el **ID de métrica** (`G-XXXXXXXXXX`).
+2. En el mismo flujo, dejar activada la **medición mejorada** con la opción *"Cambios de página basados en eventos del historial del navegador"*: el sitio navega entre páginas sin recargar (App Router), y sin esa opción GA4 solo contaría la primera página de cada visita.
+3. Agregar `NEXT_PUBLIC_GA_ID` en Vercel (Production) y hacer **Redeploy**. Para probar en local, ponerla en `.env.local`.
+
+### Verificar
+
+- En el navegador, DevTools → **Network** → filtrar por `collect`: debe aparecer una petición a `google-analytics.com/g/collect` al cargar y al navegar.
+- DevTools → **Console**: no debe haber errores de *Content Security Policy* relacionados con `googletagmanager.com`.
+- En GA4, **Informes → Tiempo real** debe mostrar la visita en segundos.
+
+### Si se agregan otros terceros
+
+Cualquier script o servicio externo nuevo (Tag Manager, píxeles, chat de terceros, etc.) necesita su dominio en la CSP de `middleware.js` y, si es un `<script>`, recibir el `nonce` igual que `GoogleAnalytics.js`. Si no, el navegador lo bloquea en silencio en producción.
+
 ## Seguridad
 
-- **CSP con nonce por petición** (`middleware.js`): cada request genera un nonce único que habilita únicamente los scripts que Next.js inyecta (`strict-dynamic`), en vez de depender de listas de dominios permitidos.
+- **CSP con nonce por petición** (`middleware.js`): cada request genera un nonce único que habilita únicamente los scripts que Next.js inyecta (`strict-dynamic`), en vez de depender de listas de dominios permitidos. El único tercero permitido es Google Analytics (ver [Google Analytics](#google-analytics)).
 - **Cabeceras HTTP** (`next.config.js`): `X-Frame-Options: DENY`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `Permissions-Policy`, y `X-Powered-By` desactivado.
 - **Validación y saneamiento**: `lib/validation.js` valida el payload del formulario de contacto; `lib/email-templates.js` escapa cualquier valor interpolado antes de insertarlo en el HTML de los correos.
 - **Rate limiting** (`lib/rate-limit.js`): limitador en memoria, suficiente para tráfico moderado en una sola instancia — no escala a múltiples instancias serverless concurrentes bajo alto tráfico.
